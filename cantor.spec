@@ -110,10 +110,10 @@ fi
 %{_kde4_datadir}/kde4/servicetypes/cantor_*.desktop
 %{_kde4_libdir}/kde4/cantor_*.so
 %{_kde4_datadir}/kde4/services/cantor/
+%if 0%{?R_support}
 %exclude %{_kde4_libdir}/kde4/cantor_rbackend.so
 %exclude %{_kde4_datadir}/kde4/services/cantor/rbackend.desktop
 
-%if 0%{?R_support}
 %files R
 %{_kde4_bindir}/cantor_rserver
 %{_kde4_libdir}/kde4/cantor_rbackend.so
