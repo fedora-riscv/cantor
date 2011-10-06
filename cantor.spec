@@ -1,4 +1,9 @@
 
+# omit until R FTBFS is fixed, https://bugzilla.redhat.com/742234
+%if 0%{?fedora} < 17
+%define R_support 1
+%endif
+
 Name:    cantor 
 Summary: KDE Frontend to Mathematical Software 
 Version: 4.7.2
@@ -12,7 +17,12 @@ BuildRequires: desktop-file-utils
 BuildRequires: kdelibs4-devel >= %{version}
 BuildRequires: pkgconfig(eigen2)
 BuildRequires: pkgconfig(libspectre)
+%if 0%{?R_support}
 BuildRequires: pkgconfig(libR)
+%else
+Obsoletes: kdeedu-math-cantor-R < 4.7.0-10
+Obsoletes: %{name}-R < %{version}-%{release}
+%endif
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: kdebase-runtime%{?_kde4_version: >= %{_kde4_version}}
@@ -103,12 +113,14 @@ fi
 %exclude %{_kde4_libdir}/kde4/cantor_rbackend.so
 %exclude %{_kde4_datadir}/kde4/services/cantor/rbackend.desktop
 
+%if 0%{?R_support}
 %files R
 %{_kde4_bindir}/cantor_rserver
 %{_kde4_libdir}/kde4/cantor_rbackend.so
 %{_kde4_datadir}/config.kcfg/rserver.kcfg
 %{_kde4_configdir}/cantor_r.knsrc
 %{_kde4_datadir}/kde4/services/cantor/rbackend.desktop
+%endif
 
 %post libs -p /sbin/ldconfig
 %postun libs -p /sbin/ldconfig
