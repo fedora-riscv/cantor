@@ -2,7 +2,7 @@
 Name:    cantor 
 Summary: KDE Frontend to Mathematical Software 
 Version: 4.7.2
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 License: GPLv2+
 URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
@@ -16,6 +16,7 @@ BuildRequires: pkgconfig(libR)
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: kdebase-runtime%{?_kde4_version: >= %{_kde4_version}}
+Requires: kate-part%{?_kde4_version: >= %{_kde4_version}}
 
 %description
 %{summary}.
@@ -124,6 +125,9 @@ fi
 
 
 %changelog
+* Sat Oct 08 2011 Rex Dieter <rdieter@fedoraproject.org> 4.7.2-3
+- Requires: kate-part
+
 * Sat Oct 08 2011 Kevin Kofler <Kevin@tigcc.ticalc.org> 4.7.2-2
 - restore R support (unconditionally, was temporarily disabled on F17+)
 
