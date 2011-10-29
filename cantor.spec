@@ -126,7 +126,7 @@ fi
 
 %changelog
 * Sat Oct 29 2011 Rex Dieter <rdieter@fedoraproject.org> 4.7.3-1
-- 4.6.3
+- 4.7.3
 
 * Sat Oct 08 2011 Rex Dieter <rdieter@fedoraproject.org> 4.7.2-3
 - Requires: kate-part
