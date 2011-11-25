@@ -92,6 +92,7 @@ fi
 %{_kde4_datadir}/config.kcfg/maximabackend.kcfg
 %{_kde4_datadir}/config.kcfg/octavebackend.kcfg
 %{_kde4_datadir}/config.kcfg/sagebackend.kcfg
+%{_kde4_datadir}/config.kcfg/scilabbackend.kcfg
 %{_kde4_configdir}/cantor.knsrc
 %{_kde4_configdir}/cantor_kalgebra.knsrc
 %{_kde4_configdir}/cantor_maxima.knsrc
