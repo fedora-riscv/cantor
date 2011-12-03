@@ -2,17 +2,19 @@
 Name:    cantor 
 Summary: KDE Frontend to Mathematical Software 
 Version: 4.7.80
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 License: GPLv2+
 URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
 Source0: http://download.kde.org/unstable/%{version}/src/%{name}-%{version}.tar.bz2
 
+BuildRequires: analitza-devel >= %{version}
 BuildRequires: desktop-file-utils
 BuildRequires: kdelibs4-devel >= %{version}
 BuildRequires: pkgconfig(eigen2)
-BuildRequires: pkgconfig(libspectre)
+BuildRequires: pkgconfig(libqalculate)
 BuildRequires: pkgconfig(libR)
+BuildRequires: pkgconfig(libspectre)
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: kdebase-runtime%{?_kde4_version: >= %{_kde4_version}}
@@ -126,6 +128,9 @@ fi
 
 
 %changelog
+* Sat Dec 03 2011 Rex Dieter <rdieter@fedoraproject.org> 4.7.80-2
+- BR: analitza-devel pkgconfig(libqalculate) 
+
 * Fri Nov 25 2011 Rex Dieter <rdieter@fedoraproject.org> 4.7.80-1
 - 4.7.80
 
