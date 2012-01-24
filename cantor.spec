@@ -6,7 +6,13 @@ Release: 1%{?dist}
 
 License: GPLv2+
 URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
-Source0: http://download.kde.org/unstable/%{version}/src/%{name}-%{version}.tar.bz2
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0: http://download.kde.org/%{stable}/%{version}/src/%{name}-%{version}.tar.bz2
 
 BuildRequires: analitza-devel >= %{version}
 BuildRequires: desktop-file-utils
