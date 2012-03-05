@@ -1,7 +1,7 @@
 
 Name:    cantor 
 Summary: KDE Frontend to Mathematical Software 
-Version: 4.8.0
+Version: 4.8.1
 Release: 1%{?dist}
 
 License: GPLv2+
@@ -12,7 +12,7 @@ URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
 %else
 %global stable stable
 %endif
-Source0: http://download.kde.org/%{stable}/%{version}/src/%{name}-%{version}.tar.bz2
+Source0: http://download.kde.org/%{stable}/%{version}/src/%{name}-%{version}.tar.xz
 
 BuildRequires: analitza-devel >= %{version}
 BuildRequires: desktop-file-utils
@@ -135,6 +135,9 @@ fi
 
 
 %changelog
+* Mon Mar 05 2012 Jaroslav Reznik <jreznik@redhat.com> - 4.8.1-1
+- 4.8.1
+
 * Sun Jan 22 2012 Rex Dieter <rdieter@fedoraproject.org> - 4.8.0-1
 - 4.8.0
 
