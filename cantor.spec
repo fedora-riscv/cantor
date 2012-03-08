@@ -1,18 +1,26 @@
 
 Name:    cantor 
 Summary: KDE Frontend to Mathematical Software 
-Version: 4.7.4
+Version: 4.8.1
 Release: 1%{?dist}
 
 License: GPLv2+
 URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
-Source0: http://download.kde.org/stable/%{version}/src/%{name}-%{version}.tar.bz2
+%global revision %(echo %{version} | cut -d. -f3)
+%if %{revision} >= 50
+%global stable unstable
+%else
+%global stable stable
+%endif
+Source0: http://download.kde.org/%{stable}/%{version}/src/%{name}-%{version}.tar.xz
 
+BuildRequires: analitza-devel >= %{version}
 BuildRequires: desktop-file-utils
 BuildRequires: kdelibs4-devel >= %{version}
 BuildRequires: pkgconfig(eigen2)
-BuildRequires: pkgconfig(libspectre)
+BuildRequires: pkgconfig(libqalculate)
 BuildRequires: pkgconfig(libR)
+BuildRequires: pkgconfig(libspectre)
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: kdebase-runtime%{?_kde4_version: >= %{_kde4_version}}
@@ -91,7 +99,9 @@ fi
 %{_kde4_datadir}/config.kcfg/cantor_libs.kcfg
 %{_kde4_datadir}/config.kcfg/maximabackend.kcfg
 %{_kde4_datadir}/config.kcfg/octavebackend.kcfg
+%{_kde4_datadir}/config.kcfg/qalculatebackend.kcfg
 %{_kde4_datadir}/config.kcfg/sagebackend.kcfg
+%{_kde4_datadir}/config.kcfg/scilabbackend.kcfg
 %{_kde4_configdir}/cantor.knsrc
 %{_kde4_configdir}/cantor_kalgebra.knsrc
 %{_kde4_configdir}/cantor_maxima.knsrc
@@ -125,8 +135,26 @@ fi
 
 
 %changelog
-* Fri Dec 02 2011 Rex Dieter <rdieter@fedoraproject.org> - 4.7.4-1
-- 4.7.4
+* Mon Mar 05 2012 Jaroslav Reznik <jreznik@redhat.com> - 4.8.1-1
+- 4.8.1
+
+* Sun Jan 22 2012 Rex Dieter <rdieter@fedoraproject.org> - 4.8.0-1
+- 4.8.0
+
+* Wed Jan 04 2012 Radek Novacek <rnovacek@redhat.com> - 4.7.97-1
+- 4.7.97
+
+* Thu Dec 22 2011 Radek Novacek <rnovacek@redhat.com> - 4.7.95-1
+- 4.7.95
+
+* Sun Dec 04 2011 Rex Dieter <rdieter@fedoraproject.org> - 4.7.90-1
+- 4.7.90
+
+* Sat Dec 03 2011 Rex Dieter <rdieter@fedoraproject.org> 4.7.80-2
+- BR: analitza-devel pkgconfig(libqalculate) 
+
+* Fri Nov 25 2011 Rex Dieter <rdieter@fedoraproject.org> 4.7.80-1
+- 4.7.80
 
 * Wed Nov  9 2011 Tom Callaway <spot@fedoraproject.org> 4.7.3-2
 - rebuild for R 2.14.0
