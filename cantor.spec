@@ -2,7 +2,7 @@
 Name:    cantor 
 Summary: KDE Frontend to Mathematical Software 
 Version: 4.8.97
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 License: GPLv2+
 URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
@@ -135,6 +135,9 @@ fi
 
 
 %changelog
+* Wed Jul 18 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.8.97-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
 * Thu Jul 12 2012 Rex Dieter <rdieter@fedoraproject.org> - 4.8.97-1
 - 4.8.97
 
