@@ -1,7 +1,6 @@
-
 Name:    cantor 
 Summary: KDE Frontend to Mathematical Software 
-Version: 4.8.5
+Version: 4.9.1
 Release: 1%{?dist}
 
 License: GPLv2+
@@ -135,11 +134,26 @@ fi
 
 
 %changelog
-* Thu Aug 02 2012 Rex Dieter <rdieter@fedoraproject.org> - 4.8.5-1
-- 4.8.5
+* Mon Sep 03 2012 Than Ngo <than@redhat.com> - 4.9.1-1
+- 4.9.1
 
-* Mon Jun 04 2012 Than Ngo <than@redhat.com> - 4.8.4-1
-- 4.8.4
+* Thu Jul 26 2012 Lukas Tinkl <ltinkl@redhat.com> - 4.9.0-1
+- 4.9.0
+
+* Wed Jul 18 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.8.97-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
+* Thu Jul 12 2012 Rex Dieter <rdieter@fedoraproject.org> - 4.8.97-1
+- 4.8.97
+
+* Wed Jun 27 2012 Jaroslav Reznik <jreznik@redhat.com> - 4.8.95-1
+- 4.8.95
+
+* Sat Jun 09 2012 Rex Dieter <rdieter@fedoraproject.org> - 4.8.90-1
+- 4.8.90
+
+* Fri Jun 01 2012 Jaroslav Reznik <jreznik@redhat.com> - 4.8.80-1
+- 4.8.80
 
 * Mon Apr 30 2012 Jaroslav Reznik <jreznik@redhat.com> - 4.8.3-1
 - 4.8.3
