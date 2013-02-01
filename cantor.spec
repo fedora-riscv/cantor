@@ -15,6 +15,7 @@ Source0: http://download.kde.org/%{stable}/%{version}/src/%{name}-%{version}.tar
 
 BuildRequires: analitza-devel >= %{version}
 BuildRequires: desktop-file-utils
+BuildRequires: gcc-gfortran
 BuildRequires: kdelibs4-devel >= %{version}
 BuildRequires: pkgconfig(eigen2)
 BuildRequires: pkgconfig(libqalculate)
