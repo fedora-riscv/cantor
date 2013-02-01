@@ -22,7 +22,7 @@ BuildRequires: pkgconfig(libR)
 BuildRequires: pkgconfig(libspectre)
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
-Requires: kdebase-runtime%{?_kde4_version: >= %{_kde4_version}}
+Requires: kde-runtime%{?_kde4_version: >= %{_kde4_version}}
 Requires: kate-part%{?_kde4_version: >= %{_kde4_version}}
 
 %description
