@@ -14,7 +14,8 @@ URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
 Source0: http://download.kde.org/%{stable}/%{version}/src/%{name}-%{version}.tar.xz
 
 ## upstream patches
-# revert these wrt looking for libgfortran for now, it breaks the build for us
+# revert these wrt looking for libgfortran for now, it breaks R support for us
+# https://bugs.kde.org/314253
 Patch101: 0001-Search-the-gfortran-library-before-using-it-uncondit.patch
 Patch102: 0002-Rlapack-needs-libgfortran.patch
 Patch103: 0003-Actually-make-my-check-work.patch
