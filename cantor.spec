@@ -13,9 +13,14 @@ URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
 %endif
 Source0: http://download.kde.org/%{stable}/%{version}/src/%{name}-%{version}.tar.xz
 
+## upstream patches
+# revert these wrt looking for libgfortran for now, it breaks the build for us
+Patch101: 0001-Search-the-gfortran-library-before-using-it-uncondit.patch
+Patch102: 0002-Rlapack-needs-libgfortran.patch
+Patch103: 0003-Actually-make-my-check-work.patch
+
 BuildRequires: analitza-devel >= %{version}
 BuildRequires: desktop-file-utils
-BuildRequires: gcc-gfortran
 BuildRequires: kdelibs4-devel >= %{version}
 BuildRequires: pkgconfig(eigen2)
 BuildRequires: pkgconfig(libqalculate)
@@ -57,6 +62,10 @@ Requires: kdelibs4-devel
 
 %prep
 %setup -q
+
+%patch103 -p1 -R -b .0003
+%patch102 -p1 -R -b .0002
+%patch101 -p1 -R -b .0001
 
 
 %build

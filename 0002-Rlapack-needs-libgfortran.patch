@@ -1,0 +1,34 @@
+From 41f812a7698fb965e7ec2d5499fb66a6b87f48b7 Mon Sep 17 00:00:00 2001
+From: Albert Astals Cid <aacid@kde.org>
+Date: Mon, 21 Jan 2013 23:25:56 +0100
+Subject: [PATCH 2/4] Rlapack needs libgfortran
+
+so if no gfortran assume r is not found
+---
+ cmake/FindR.cmake | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/cmake/FindR.cmake b/cmake/FindR.cmake
+index 63d0387..f0dcec4 100644
+--- a/cmake/FindR.cmake
++++ b/cmake/FindR.cmake
+@@ -71,12 +71,14 @@ IF(R_EXECUTABLE)
+     IF(NOT WIN32)
+       FIND_LIBRARY(GFORTRAN_LIBRARY
+         gfortran)
+-      if (GFORTRAN_LIBRARY)
++      IF (GFORTRAN_LIBRARY)
+         # needed when linking to Rlapack on linux for some unknown reason.
+         # apparently not needed on windows (let's see, when it comes back to bite us, though)
+         # and compiling on windows is hard enough even without requiring libgfortran, too.
+         SET(R_LIBRARIES ${R_LIBRARIES} gfortran)
+-      endif (GFORTRAN_LIBRARY)
++      ELSE (GFORTRAN_LIBRARY)
++        SET(R_FOUND false)
++      ENDIF (GFORTRAN_LIBRARY)
+     ENDIF(NOT WIN32)
+   ENDIF(NOT R_LAPACK_LIBRARY)
+ 
+-- 
+1.8.1
+
