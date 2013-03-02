@@ -1,7 +1,7 @@
 Name:    cantor 
 Summary: KDE Frontend to Mathematical Software 
-Version: 4.10.0
-Release: 2%{?dist}
+Version: 4.10.1
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
@@ -14,8 +14,6 @@ URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
 Source0: http://download.kde.org/%{stable}/%{version}/src/%{name}-%{version}.tar.xz
 
 ## upstream patches
-# proper ligfortran buildfix for http://bugs.kde.org/314253
-Patch100: cantor-libgfortran_fix.patch
 
 BuildRequires: analitza-devel >= %{version}
 BuildRequires: desktop-file-utils
@@ -60,8 +58,6 @@ Requires: kdelibs4-devel
 
 %prep
 %setup -q
-
-%patch100 -p1 -b .libgfortran_fix
 
 
 %build
@@ -140,6 +136,9 @@ fi
 
 
 %changelog
+* Sat Mar 02 2013 Rex Dieter <rdieter@fedoraproject.org> - 4.10.1-1
+- 4.10.1
+
 * Thu Feb 07 2013 Rex Dieter <rdieter@fedoraproject.org> 4.10.0-2
 - recent libgfortran-related commits breaks cantor-R support (kde#314253)
 
