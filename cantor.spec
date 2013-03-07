@@ -1,6 +1,6 @@
 Name:    cantor 
 Summary: KDE Frontend to Mathematical Software 
-Version: 4.9.5
+Version: 4.10.1
 Release: 1%{?dist}
 
 License: GPLv2+
@@ -13,6 +13,8 @@ URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
 %endif
 Source0: http://download.kde.org/%{stable}/%{version}/src/%{name}-%{version}.tar.xz
 
+## upstream patches
+
 BuildRequires: analitza-devel >= %{version}
 BuildRequires: desktop-file-utils
 BuildRequires: kdelibs4-devel >= %{version}
@@ -22,7 +24,7 @@ BuildRequires: pkgconfig(libR)
 BuildRequires: pkgconfig(libspectre)
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
-Requires: kdebase-runtime%{?_kde4_version: >= %{_kde4_version}}
+Requires: kde-runtime%{?_kde4_version: >= %{_kde4_version}}
 Requires: kate-part%{?_kde4_version: >= %{_kde4_version}}
 
 %description
@@ -134,8 +136,26 @@ fi
 
 
 %changelog
-* Sat Dec 29 2012 Rex Dieter <rdieter@fedoraproject.org> - 4.9.5-1
-- 4.9.5
+* Sat Mar 02 2013 Rex Dieter <rdieter@fedoraproject.org> - 4.10.1-1
+- 4.10.1
+
+* Thu Feb 07 2013 Rex Dieter <rdieter@fedoraproject.org> 4.10.0-2
+- recent libgfortran-related commits breaks cantor-R support (kde#314253)
+
+* Fri Feb 01 2013 Rex Dieter <rdieter@fedoraproject.org> - 4.10.0-1
+- 4.10.0
+
+* Tue Jan 22 2013 Rex Dieter <rdieter@fedoraproject.org> - 4.9.98-1
+- 4.9.98
+
+* Fri Jan 04 2013 Rex Dieter <rdieter@fedoraproject.org> - 4.9.97-1
+- 4.9.97
+
+* Thu Dec 20 2012 Rex Dieter <rdieter@fedoraproject.org> - 4.9.95-1
+- 4.9.95
+
+* Tue Dec 04 2012 Rex Dieter <rdieter@fedoraproject.org> - 4.9.90-1
+- 4.9.90
 
 * Mon Dec 03 2012 Than Ngo <than@redhat.com> - 4.9.4-1
 - 4.9.4
