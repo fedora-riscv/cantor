@@ -1,6 +1,6 @@
 Name:    cantor 
 Summary: KDE Frontend to Mathematical Software 
-Version: 4.10.4
+Version: 4.10.90
 Release: 1%{?dist}
 
 License: GPLv2+
@@ -12,9 +12,6 @@ URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
 %global stable stable
 %endif
 Source0: http://download.kde.org/%{stable}/%{version}/src/%{name}-%{version}.tar.xz
-
-# fix SAGE backend for SAGE 5.8 (kde#316299), preliminary patch from upstream
-Patch0: cantor-4.10.3-sage58.patch
 
 ## upstream patches
 
@@ -61,7 +58,6 @@ Requires: kdelibs4-devel
 
 %prep
 %setup -q
-%patch0 -p1 -b .sage58
 
 
 %build
@@ -140,6 +136,9 @@ fi
 
 
 %changelog
+* Fri Jun 28 2013 Rex Dieter <rdieter@fedoraproject.org> - 4.10.90-1
+- 4.10.90
+
 * Sat Jun 01 2013 Rex Dieter <rdieter@fedoraproject.org> - 4.10.4-1
 - 4.10.4
 
