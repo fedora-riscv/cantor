@@ -1,0 +1,324 @@
+commit 5374d305f68a30ad04e2d7bb64ba825b436afd1a
+Author: Alexander Rieder <alexanderrieder@gmail.com>
+Date:   Sun Jun 23 23:09:18 2013 +0200
+
+    - fix sage backend for newer sage versions (>5.7)
+    - introduce a "legacy mode" for older versions, using the old commands
+    
+    tested with sage v5.6 and 5.9
+    CCBUG:316299
+
+diff --git a/src/backends/sage/sagecompletionobject.cpp b/src/backends/sage/sagecompletionobject.cpp
+index dec0c8f..7e43c4c 100644
+--- a/src/backends/sage/sagecompletionobject.cpp
++++ b/src/backends/sage/sagecompletionobject.cpp
+@@ -52,7 +52,7 @@ void SageCompletionObject::fetchCompletions()
+ 
+     //cache the value of the "_" variable into __hist_tmp__, so we can restore the previous result
+     //after complete() was evaluated
+-    m_expression=session()->evaluateExpression("__hist_tmp__=_; __IPYTHON__.complete(\""+command()+"\");_=__hist_tmp__");
++    m_expression=session()->evaluateExpression("__hist_tmp__=_; __CANTOR_IPYTHON_SHELL__.complete(\""+command()+"\");_=__hist_tmp__");
+     connect(m_expression, SIGNAL(gotResult()), this, 
+ 	    SLOT(extractCompletions()));
+ 
+@@ -62,6 +62,56 @@ void SageCompletionObject::fetchCompletions()
+ 
+ void SageCompletionObject::extractCompletions()
+ {
++  SageSession* s=qobject_cast<SageSession*>(session());
++  if(s&&s->inLegacyMode())
++    extractCompletionsLegacy();
++  else
++    extractCompletionsNew();
++}
++
++void SageCompletionObject::extractCompletionsNew()
++{
++    Cantor::Result* res=m_expression->result();
++    m_expression->deleteLater();
++    m_expression=0;
++
++    if(!res||!res->type()==Cantor::TextResult::Type)
++    {
++        kDebug()<<"something went wrong fetching tab completion";
++        return;
++    }
++    
++    //the result looks like "['comp1', 'comp2']" parse it
++
++    //for sage version 5.7 this looks like
++    //('s1', ['comp1','comp2']) where s1 is the string we called complete with
++
++    QString txt=res->toHtml().trimmed();
++    txt.remove("<br/>");
++    txt=txt.mid(txt.indexOf(command())+command().length()+2).trimmed();
++    txt=txt.mid(1); //remove [
++    txt.chop(2); //remove ]
++
++    kDebug()<<"completion string: "<<txt;
++
++    QStringList tmp=txt.split(',');
++    QStringList completions;
++
++    foreach(QString c, tmp) // krazy:exclude=foreach
++    {
++        c=c.trimmed();
++        c.chop(1);
++        completions<<c.mid(1);
++    }
++
++    completions << SageKeywords::instance()->keywords();
++    setCompletions(completions);
++
++    emit fetchingDone();
++}
++
++void SageCompletionObject::extractCompletionsLegacy()
++{
+     Cantor::Result* res=m_expression->result();
+     m_expression->deleteLater();
+     m_expression=0;
+@@ -93,6 +143,7 @@ void SageCompletionObject::extractCompletions()
+     emit fetchingDone();
+ }
+ 
++
+ void SageCompletionObject::fetchIdentifierType()
+ {
+     if (m_expression)
+diff --git a/src/backends/sage/sagecompletionobject.h b/src/backends/sage/sagecompletionobject.h
+index 3ac3f9f..b213568 100644
+--- a/src/backends/sage/sagecompletionobject.h
++++ b/src/backends/sage/sagecompletionobject.h
+@@ -40,12 +40,17 @@ class SageCompletionObject : public Cantor::CompletionObject
+     bool mayIdentifierContain(QChar c) const;
+     bool mayIdentifierBeginWith(QChar c) const;
+ 
++
+   protected slots:
+     void fetchCompletions();
+     void extractCompletions();
+     void fetchIdentifierType();
+     void extractIdentifierType();
+ 
++ private:
++    void extractCompletionsNew();
++    void extractCompletionsLegacy();
++
+   private:
+     Cantor::Expression* m_expression;
+ };
+diff --git a/src/backends/sage/sageexpression.cpp b/src/backends/sage/sageexpression.cpp
+index eabdda2..fbde7c1 100644
+--- a/src/backends/sage/sageexpression.cpp
++++ b/src/backends/sage/sageexpression.cpp
+@@ -122,7 +122,7 @@ void SageExpression::parseOutput(const QString& text)
+         //reset the indices
+         index=index2=-1;
+     }
+-
++    
+     m_outputCache+=output;
+ 
+     if(m_promptCount<=0)
+@@ -160,11 +160,9 @@ void SageExpression::addFileResult( const QString& path )
+ {
+   KUrl url( path );
+   KMimeType::Ptr type=KMimeType::findByUrl(url);
+-  kDebug()<<"MimeType: "<<type->name();
+-  if(type->name().contains("image"))
++  if(m_imagePath.isEmpty()||type->name().contains("image")||path.endsWith(".png")||path.endsWith(".gif"))
+   {
+-    kDebug()<<"adding file "<<path<<"   "<<url;
+-    m_imagePath=path;
++      m_imagePath=path;
+   }
+ }
+ 
+@@ -172,8 +170,11 @@ void SageExpression::evalFinished()
+ {
+     kDebug()<<"evaluation finished";
+     kDebug()<<m_outputCache;
++    
++    //check if our image path contains a valid image that we can try to show
++    bool hasImage=!m_imagePath.isNull();
+ 
+-    if ( m_imagePath.isNull() ) //If this result contains a file, drop the text information
++    if ( !hasImage ) //If this result contains a file, drop the text information
+     {
+         Cantor::TextResult* result=0;
+ 
+@@ -219,7 +220,7 @@ void SageExpression::evalFinished()
+     }
+     else
+     {
+-        KMimeType::Ptr type=KMimeType::findByUrl(m_imagePath);
++	KMimeType::Ptr type=KMimeType::findByUrl(m_imagePath);
+         if(type->is("image/gif"))
+             setResult( new Cantor::AnimationResult( KUrl(m_imagePath ),i18n("Result of %1" , command() ) ) );
+         else
+diff --git a/src/backends/sage/sagesession.cpp b/src/backends/sage/sagesession.cpp
+index a535277..90becb2 100644
+--- a/src/backends/sage/sagesession.cpp
++++ b/src/backends/sage/sagesession.cpp
+@@ -38,18 +38,30 @@ const QByteArray SageSession::SageAlternativePrompt="....: "; //Text, sage outpu
+ static QByteArray initCmd="os.environ['PAGER'] = 'cat'                     \n "\
+                            "sage.misc.pager.EMBEDDED_MODE = True           \n "\
+                            "sage.misc.viewer.BROWSER=''                    \n "\
++                           "sage.misc.viewer.viewer.png_viewer('')         \n" \
+                            "sage.plot.plot3d.base.SHOW_DEFAULTS['viewer'] = 'tachyon' \n"\
+                            "sage.misc.latex.EMBEDDED_MODE = True           \n "\
+                            "os.environ['PAGER'] = 'cat'                    \n "\
+-                           " __IPYTHON__.shell.autoindent=False            \n "\
+-                           "print '____TMP_DIR____', sage.misc.misc.SAGE_TMP\n"\
+-                           "print '____END_OF_INIT____'                    \n ";
++                           "%colors nocolor                                \n "\
++                           "print '____TMP_DIR____', sage.misc.misc.SAGE_TMP\n";
++
++static QByteArray newInitCmd=
++    "__CANTOR_IPYTHON_SHELL__=get_ipython()   \n "\
++    "__CANTOR_IPYTHON_SHELL__.autoindent=False\n "\
++    "print '____END_OF_INIT____'              \n ";
++
++static QByteArray legacyInitCmd=
++    "__CANTOR_IPYTHON_SHELL__=__IPYTHON__   \n "  \
++    "__CANTOR_IPYTHON_SHELL__.autoindent=False\n "\
++    "print '____END_OF_INIT____'              \n ";
++
+ 
+ SageSession::SageSession( Cantor::Backend* backend) : Session(backend)
+ {
+     kDebug();
+     m_isInitialized=false;
+-
++    m_inLegacyMode=false;
++    m_haveSentInitCmd=false;
+     connect( &m_dirWatch, SIGNAL( created( const QString& ) ), this, SLOT( fileCreated( const QString& ) ) );
+ }
+ 
+@@ -129,8 +141,47 @@ void SageSession::readStdOut()
+ 
+         kDebug()<<"tmp path: "<<m_tmpPath;
+ 
+-        m_dirWatch.addDir( m_tmpPath, KDirWatch::WatchFiles );
++        m_dirWatch.addDir( m_tmpPath, KDirWatch::WatchFiles );     
++    }
++
++    if(!m_isInitialized)
++    {
++        //try to guess the version of sage to determine
++        //if we have to use the legacy commands or not.
++        QRegExp versionExp("Sage\\s+Version\\s+(\\d+)\\.(\\d+)");
++        int index=versionExp.indexIn(m_outputCache);
++        if(index!=-1)
++        {
++            QStringList version=versionExp.capturedTexts();
++            kDebug()<<"found version: "<<version;
++            if(version.size()>2)
++            {
++                int major=version[1].toInt();
++                int minor=version[2].toInt();
++            
++                if(major<=5&&minor<=7)
++                {
++                    m_inLegacyMode=true;
++                    kDebug()<<"using an old version of sage: "<<major<<"."<<minor<<". switching to legacy mode";
++                    if(!m_haveSentInitCmd)
++                    {
++                        m_process->pty()->write(legacyInitCmd);
++                        m_haveSentInitCmd=true;
++                    }
++
++                }else
++                {
++                    kDebug()<<"using the current set of commands";
++                    if(!m_haveSentInitCmd)
++                    {
++                        m_process->pty()->write(newInitCmd);
++                        m_haveSentInitCmd=true;
++                    }
++                }
++            }
++        }
+     }
++    
+ 
+     int indexOfEOI=m_outputCache.indexOf("____END_OF_INIT____");
+     if(indexOfEOI!=-1&&m_outputCache.indexOf(SagePrompt, indexOfEOI)!=-1)
+@@ -277,6 +328,7 @@ void SageSession::waitForNextPrompt()
+ 
+ void SageSession::fileCreated( const QString& path )
+ {
++    kDebug()<<"got a file "<<path;
+     SageExpression* expr=m_expressionQueue.first();
+     if ( expr )
+         expr->addFileResult( path );
+@@ -285,14 +337,23 @@ void SageSession::fileCreated( const QString& path )
+ void SageSession::setTypesettingEnabled(bool enable)
+ {
+     Cantor::Session::setTypesettingEnabled(enable);
+-
+     //tell the sage server to enable/disable pretty_print
+-    //the _ and __IP.outputcache() are needed to keep the
+-    // _ operator working
+-    if (enable)
+-        evaluateExpression("sage.misc.latex.pretty_print_default(true);_;__IP.outputcache()", Cantor::Expression::DeleteOnFinish);
+-    else
+-        evaluateExpression("sage.misc.latex.pretty_print_default(false);_;__IP.outputcache()", Cantor::Expression::DeleteOnFinish);
++    if(inLegacyMode())
++    {
++        //the _ and __IP.outputcache() are needed to keep the
++        // _ operator working. in modern versions of sage the __IP variable
++        //has been removed
++        if (enable)
++            evaluateExpression("sage.misc.latex.pretty_print_default(true);_;__IP.outputcache()", Cantor::Expression::DeleteOnFinish);
++        else
++            evaluateExpression("sage.misc.latex.pretty_print_default(false);_;__IP.outputcache()", Cantor::Expression::DeleteOnFinish);
++    }else
++    {
++        if (enable)
++            evaluateExpression("sage.misc.latex.pretty_print_default(true)", Cantor::Expression::DeleteOnFinish);
++        else
++            evaluateExpression("sage.misc.latex.pretty_print_default(false)", Cantor::Expression::DeleteOnFinish);
++    }
+ }
+ 
+ Cantor::CompletionObject* SageSession::completionFor(const QString& command, int index)
+@@ -305,5 +366,9 @@ QSyntaxHighlighter* SageSession::syntaxHighlighter(QObject* parent)
+     return new SageHighlighter(parent);
+ }
+ 
++bool SageSession::inLegacyMode()
++{
++  return m_inLegacyMode;
++}
+ 
+ #include "sagesession.moc"
+diff --git a/src/backends/sage/sagesession.h b/src/backends/sage/sagesession.h
+index 29a0c76..fb81f99 100644
+--- a/src/backends/sage/sagesession.h
++++ b/src/backends/sage/sagesession.h
+@@ -59,7 +59,7 @@ class SageSession : public Cantor::Session
+     Cantor::CompletionObject* completionFor(const QString& command, int index=-1);
+     QSyntaxHighlighter* syntaxHighlighter(QObject* parent);
+ 
+-
++    bool inLegacyMode();
+   public slots:
+     void readStdOut();
+     void readStdErr();
+@@ -75,11 +75,13 @@ class SageSession : public Cantor::Session
+   private:
+     KPtyProcess* m_process;
+     QList<SageExpression*> m_expressionQueue;
+-    bool m_isInitialized;
++    int m_isInitialized;
+     QString m_tmpPath;
+     KDirWatch m_dirWatch;
+     bool m_waitingForPrompt;
+     QString m_outputCache;
++    bool m_inLegacyMode;
++    bool m_haveSentInitCmd;
+ };
+ 
+ #endif /* _SAGESESSION_H */
