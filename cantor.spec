@@ -1,7 +1,7 @@
 Name:    cantor 
 Summary: KDE Frontend to Mathematical Software 
 Version: 4.11.5
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 License: GPLv2+
 URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
@@ -136,6 +136,9 @@ fi
 
 
 %changelog
+* Thu May  8 2014 Tom Callaway <spot@fedoraproject.org> - 4.11.5-2
+- rebuild against R with no libRblas/libRlapack
+
 * Sat Jan 04 2014 Rex Dieter <rdieter@fedoraproject.org> - 4.11.5-1
 - 4.11.5
 
