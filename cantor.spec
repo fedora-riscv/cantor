@@ -1,7 +1,7 @@
 Name:    cantor 
 Summary: KDE Frontend to Mathematical Software 
 Version: 4.12.5
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 License: GPLv2+
 URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
@@ -22,6 +22,9 @@ BuildRequires: pkgconfig(eigen2)
 BuildRequires: pkgconfig(libqalculate)
 BuildRequires: pkgconfig(libR)
 BuildRequires: pkgconfig(libspectre)
+BuildRequires: python2-devel
+
+Provides: %{name}-part = %{version}-%{release}
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: kde-runtime%{?_kde4_version: >= %{_kde4_version}}
@@ -100,6 +103,7 @@ fi
 %{_kde4_datadir}/config.kcfg/cantor_libs.kcfg
 %{_kde4_datadir}/config.kcfg/maximabackend.kcfg
 %{_kde4_datadir}/config.kcfg/octavebackend.kcfg
+%{_kde4_datadir}/config.kcfg/python2backend.kcfg
 %{_kde4_datadir}/config.kcfg/qalculatebackend.kcfg
 %{_kde4_datadir}/config.kcfg/sagebackend.kcfg
 %{_kde4_datadir}/config.kcfg/scilabbackend.kcfg
@@ -110,10 +114,57 @@ fi
 %{_kde4_iconsdir}/hicolor/*/*/*
 %{_kde4_appsdir}/cantor/
 %{_kde4_datadir}/kde4/servicetypes/cantor_*.desktop
-%{_kde4_libdir}/kde4/cantor_*.so
-%{_kde4_datadir}/kde4/services/cantor/
-%exclude %{_kde4_libdir}/kde4/cantor_rbackend.so
-%exclude %{_kde4_datadir}/kde4/services/cantor/rbackend.desktop
+%dir %{_kde4_datadir}/kde4/services/cantor/
+%{_kde4_datadir}/kde4/services/cantor/advancedplotassistant.desktop
+%{_kde4_datadir}/kde4/services/cantor/creatematrixassistant.desktop
+%{_kde4_datadir}/kde4/services/cantor/differentiateassistant.desktop
+%{_kde4_datadir}/kde4/services/cantor/eigenvaluesassistant.desktop
+%{_kde4_datadir}/kde4/services/cantor/eigenvectorsassistant.desktop
+%{_kde4_datadir}/kde4/services/cantor/helppanelplugin.desktop
+%{_kde4_datadir}/kde4/services/cantor/importpackageassistant.desktop
+%{_kde4_datadir}/kde4/services/cantor/integrateassistant.desktop
+%{_kde4_datadir}/kde4/services/cantor/invertmatrixassistant.desktop
+%{_kde4_datadir}/kde4/services/cantor/kalgebrabackend.desktop
+%{_kde4_datadir}/kde4/services/cantor/maximabackend.desktop
+%{_kde4_datadir}/kde4/services/cantor/nullbackend.desktop
+%{_kde4_datadir}/kde4/services/cantor/octavebackend.desktop
+%{_kde4_datadir}/kde4/services/cantor/plot2dassistant.desktop
+%{_kde4_datadir}/kde4/services/cantor/plot3dassistant.desktop
+%{_kde4_datadir}/kde4/services/cantor/python2backend.desktop
+%{_kde4_datadir}/kde4/services/cantor/qalculatebackend.desktop
+%{_kde4_datadir}/kde4/services/cantor/qalculateplotassistant.desktop
+%{_kde4_datadir}/kde4/services/cantor/runscriptassistant.desktop
+%{_kde4_datadir}/kde4/services/cantor/sagebackend.desktop
+%{_kde4_datadir}/kde4/services/cantor/scilabbackend.desktop
+%{_kde4_datadir}/kde4/services/cantor/solveassistant.desktop
+%{_kde4_datadir}/kde4/services/cantor/variablemanagerplugin.desktop
+%{_kde4_libdir}/kde4/cantor_advancedplotassistant.so
+%{_kde4_libdir}/kde4/cantor_creatematrixassistant.so
+%{_kde4_libdir}/kde4/cantor_differentiateassistant.so
+%{_kde4_libdir}/kde4/cantor_eigenvaluesassistant.so
+%{_kde4_libdir}/kde4/cantor_eigenvectorsassistant.so
+%{_kde4_libdir}/kde4/cantor_helppanelplugin.so
+%{_kde4_libdir}/kde4/cantor_importpackageassistant.so
+%{_kde4_libdir}/kde4/cantor_integrateassistant.so
+%{_kde4_libdir}/kde4/cantor_invertmatrixassistant.so
+%{_kde4_libdir}/kde4/cantor_kalgebrabackend.so
+%{_kde4_libdir}/kde4/cantor_maximabackend.so
+%{_kde4_libdir}/kde4/cantor_nullbackend.so
+%{_kde4_libdir}/kde4/cantor_octavebackend.so
+%{_kde4_libdir}/kde4/cantor_plot2dassistant.so
+%{_kde4_libdir}/kde4/cantor_plot3dassistant.so
+%{_kde4_libdir}/kde4/cantor_python2backend.so
+%{_kde4_libdir}/kde4/cantor_qalculatebackend.so
+%{_kde4_libdir}/kde4/cantor_qalculateplotassistant.so
+%{_kde4_libdir}/kde4/cantor_runscriptassistant.so
+%{_kde4_libdir}/kde4/cantor_sagebackend.so
+%{_kde4_libdir}/kde4/cantor_scilabbackend.so
+%{_kde4_libdir}/kde4/cantor_solveassistant.so
+%{_kde4_libdir}/kde4/cantor_variablemanagerplugin.so
+
+#files part
+%{_kde4_libdir}/kde4/libcantorpart.so
+%{_kde4_datadir}/kde4/services/cantor/cantor_part.desktop
 
 %files R
 %{_kde4_bindir}/cantor_rserver
@@ -126,7 +177,6 @@ fi
 %postun libs -p /sbin/ldconfig
 
 %files libs
-%{_kde4_libdir}/kde4/libcantorpart.so
 %{_kde4_libdir}/libcantorlibs.so.*
 %{_kde4_libdir}/libcantor_config.so
 
@@ -136,6 +186,11 @@ fi
 
 
 %changelog
+* Fri May 09 2014 Rex Dieter <rdieter@fedoraproject.org> 
+- 4.12.5-3
+- Missing cantor python interface (#1095918)
+- Provides: cantor-part
+
 * Thu May  8 2014 Tom Callaway <spot@fedoraproject.org> - 4.12.5-2
 - rebuild against R with no libRblas/libRlapack
 
