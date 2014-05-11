@@ -1,7 +1,7 @@
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software 
-Version: 4.13.0
-Release: 3%{?dist}
+Version: 4.13.1
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
@@ -186,6 +186,9 @@ fi
 
 
 %changelog
+* Sun May 11 2014 Rex Dieter <rdieter@fedoraproject.org> - 4.13.1-1
+- 4.13.1
+
 * Fri May 09 2014 Rex Dieter <rdieter@fedoraproject.org> - 4.13.0-3
 - Missing cantor python interface (#1095918)
 - Provides: cantor-part
