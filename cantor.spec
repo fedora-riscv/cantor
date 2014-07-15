@@ -1,6 +1,6 @@
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software 
-Version: 4.13.2
+Version: 4.13.3
 Release: 1%{?dist}
 
 License: GPLv2+
@@ -186,6 +186,9 @@ fi
 
 
 %changelog
+* Tue Jul 15 2014 Rex Dieter <rdieter@fedoraproject.org> - 4.13.3-1
+- 4.13.3
+
 * Mon Jun 09 2014 Rex Dieter <rdieter@fedoraproject.org> - 4.13.2-1
 - 4.13.2
 
