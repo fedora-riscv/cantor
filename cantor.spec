@@ -98,9 +98,11 @@ fi
 %doc COPYING COPYING.DOC
 %doc README TODO
 %{_kde4_bindir}/cantor
+%{_kde4_datadir}/appdata/cantor.appdata.xml
 %{_kde4_datadir}/applications/kde4/cantor.desktop
 %{_kde4_datadir}/config.kcfg/cantor.kcfg
 %{_kde4_datadir}/config.kcfg/cantor_libs.kcfg
+%{_kde4_datadir}/config.kcfg/kalgebrabackend.kcfg
 %{_kde4_datadir}/config.kcfg/maximabackend.kcfg
 %{_kde4_datadir}/config.kcfg/octavebackend.kcfg
 %{_kde4_datadir}/config.kcfg/python2backend.kcfg
@@ -109,6 +111,7 @@ fi
 %{_kde4_datadir}/config.kcfg/scilabbackend.kcfg
 %{_kde4_configdir}/cantor.knsrc
 %{_kde4_configdir}/cantor_kalgebra.knsrc
+%{_kde4_configdir}/cantor_python2.knsrc
 %{_kde4_configdir}/cantor_maxima.knsrc
 %{_kde4_configdir}/cantor_sage.knsrc
 %{_kde4_iconsdir}/hicolor/*/*/*
