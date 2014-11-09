@@ -94,6 +94,7 @@ touch --no-create %{_kde4_iconsdir}/hicolor &> /dev/null || :
 gtk-update-icon-cache %{_kde4_iconsdir}/hicolor &> /dev/null || :
 fi
 
+
 %files -f %{name}.lang
 %doc COPYING COPYING.DOC
 %doc README TODO
@@ -111,9 +112,13 @@ fi
 %{_kde4_datadir}/config.kcfg/scilabbackend.kcfg
 %{_kde4_configdir}/cantor.knsrc
 %{_kde4_configdir}/cantor_kalgebra.knsrc
+%{_kde4_configdir}/cantor_lua.knsrc
 %{_kde4_configdir}/cantor_python2.knsrc
 %{_kde4_configdir}/cantor_maxima.knsrc
+%{_kde4_configdir}/cantor_octave.knsrc
+%{_kde4_configdir}/cantor_qalculate.knsrc
 %{_kde4_configdir}/cantor_sage.knsrc
+%{_kde4_configdir}/cantor_scilab.knsrc
 %{_kde4_iconsdir}/hicolor/*/*/*
 %{_kde4_appsdir}/cantor/
 %{_kde4_datadir}/kde4/servicetypes/cantor_*.desktop
