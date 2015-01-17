@@ -6,8 +6,8 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software 
-Version: 4.14.3
-Release: 2%{?dist}
+Version: 14.12.1
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
@@ -17,7 +17,7 @@ URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
 %else
 %global stable stable
 %endif
-Source0: http://download.kde.org/%{stable}/%{version}/src/%{name}-%{version}.tar.xz
+Source0: http://download.kde.org/%{stable}/applications/%{version}/src/%{name}-%{version}.tar.xz
 
 ## upstream patches
 
@@ -203,6 +203,9 @@ fi
 
 
 %changelog
+* Sat Jan 17 2015 Rex Dieter <rdieter@fedoraproject.org> - 14.12.1-1
+- 14.12.1
+
 * Sat Jan 17 2015 Rex Dieter <rdieter@fedoraproject.org> 4.14.3-2
 - fixups for kde-apps-14.12
 
