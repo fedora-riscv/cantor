@@ -1,7 +1,13 @@
+
+## kde-apps-14.12 ships only kf5 analitza
+%if 0%{?fedora} < 22
+%global analitza 1
+%endif
+
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software 
 Version: 4.14.3
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 License: GPLv2+
 URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
@@ -15,9 +21,11 @@ Source0: http://download.kde.org/%{stable}/%{version}/src/%{name}-%{version}.tar
 
 ## upstream patches
 
-BuildRequires: analitza-devel >= %{version}
+%if 0%{?analitza}
+BuildRequires: analitza-devel >= 4.14
+%endif
 BuildRequires: desktop-file-utils
-BuildRequires: kdelibs4-devel >= %{version}
+BuildRequires: kdelibs4-devel >= 4.14
 BuildRequires: pkgconfig(eigen2)
 BuildRequires: pkgconfig(libqalculate)
 BuildRequires: pkgconfig(libR)
@@ -27,8 +35,8 @@ BuildRequires: python2-devel
 Provides: %{name}-part = %{version}-%{release}
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
-Requires: kde-runtime%{?_kde4_version: >= %{_kde4_version}}
-Requires: kate-part%{?_kde4_version: >= %{_kde4_version}}
+Requires: kate-part
+%{?kde_runtime_requires}
 
 %description
 %{summary}.
@@ -60,11 +68,11 @@ Requires: kdelibs4-devel
 
 
 %prep
-%setup -q
+%setup
 
 
 %build
-mkdir -p %{_target_platform}
+mkdir %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kde4} ..
 popd
@@ -94,7 +102,6 @@ touch --no-create %{_kde4_iconsdir}/hicolor &> /dev/null || :
 gtk-update-icon-cache %{_kde4_iconsdir}/hicolor &> /dev/null || :
 fi
 
-
 %files -f %{name}.lang
 %doc COPYING COPYING.DOC
 %doc README TODO
@@ -103,7 +110,6 @@ fi
 %{_kde4_datadir}/applications/kde4/cantor.desktop
 %{_kde4_datadir}/config.kcfg/cantor.kcfg
 %{_kde4_datadir}/config.kcfg/cantor_libs.kcfg
-%{_kde4_datadir}/config.kcfg/kalgebrabackend.kcfg
 %{_kde4_datadir}/config.kcfg/maximabackend.kcfg
 %{_kde4_datadir}/config.kcfg/octavebackend.kcfg
 %{_kde4_datadir}/config.kcfg/python2backend.kcfg
@@ -132,7 +138,6 @@ fi
 %{_kde4_datadir}/kde4/services/cantor/importpackageassistant.desktop
 %{_kde4_datadir}/kde4/services/cantor/integrateassistant.desktop
 %{_kde4_datadir}/kde4/services/cantor/invertmatrixassistant.desktop
-%{_kde4_datadir}/kde4/services/cantor/kalgebrabackend.desktop
 %{_kde4_datadir}/kde4/services/cantor/maximabackend.desktop
 %{_kde4_datadir}/kde4/services/cantor/nullbackend.desktop
 %{_kde4_datadir}/kde4/services/cantor/octavebackend.desktop
@@ -155,7 +160,6 @@ fi
 %{_kde4_libdir}/kde4/cantor_importpackageassistant.so
 %{_kde4_libdir}/kde4/cantor_integrateassistant.so
 %{_kde4_libdir}/kde4/cantor_invertmatrixassistant.so
-%{_kde4_libdir}/kde4/cantor_kalgebrabackend.so
 %{_kde4_libdir}/kde4/cantor_maximabackend.so
 %{_kde4_libdir}/kde4/cantor_nullbackend.so
 %{_kde4_libdir}/kde4/cantor_octavebackend.so
@@ -169,6 +173,11 @@ fi
 %{_kde4_libdir}/kde4/cantor_scilabbackend.so
 %{_kde4_libdir}/kde4/cantor_solveassistant.so
 %{_kde4_libdir}/kde4/cantor_variablemanagerplugin.so
+%if 0%{?analitza}
+%{_kde4_datadir}/config.kcfg/kalgebrabackend.kcfg
+%{_kde4_datadir}/kde4/services/cantor/kalgebrabackend.desktop
+%{_kde4_libdir}/kde4/cantor_kalgebrabackend.so
+%endif
 
 #files part
 %{_kde4_libdir}/kde4/libcantorpart.so
@@ -194,6 +203,9 @@ fi
 
 
 %changelog
+* Sat Jan 17 2015 Rex Dieter <rdieter@fedoraproject.org> 4.14.3-2
+- fixups for kde-apps-14.12
+
 * Sat Nov 08 2014 Rex Dieter <rdieter@fedoraproject.org> - 4.14.3-1
 - 4.14.3
 
