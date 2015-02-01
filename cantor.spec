@@ -7,7 +7,7 @@
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software 
 Version: 14.12.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 License: GPLv2+
 URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
@@ -35,7 +35,7 @@ BuildRequires: python2-devel
 Provides: %{name}-part = %{version}-%{release}
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
-Requires: kate-part
+Requires: kate4-part
 %{?kde_runtime_requires}
 
 %description
@@ -203,6 +203,9 @@ fi
 
 
 %changelog
+* Sat Jan 31 2015 Rex Dieter <rdieter@fedoraproject.org> 14.12.1-2
+- Requires: kate4-part
+
 * Sat Jan 17 2015 Rex Dieter <rdieter@fedoraproject.org> - 14.12.1-1
 - 14.12.1
 
