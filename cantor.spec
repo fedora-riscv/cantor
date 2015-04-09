@@ -1,12 +1,7 @@
 
-## kde-apps-14.12 ships only kf5 analitza
-%if 0%{?fedora} < 22
-%global analitza 1
-%endif
-
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software 
-Version: 14.12.3
+Version: 15.03.97
 Release: 1%{?dist}
 
 License: GPLv2+
@@ -21,22 +16,20 @@ Source0: http://download.kde.org/%{stable}/applications/%{version}/src/%{name}-%
 
 ## upstream patches
 
-%if 0%{?analitza}
-BuildRequires: analitza-devel >= 4.14
-%endif
+BuildRequires: analitza-devel >= 14.12
 BuildRequires: desktop-file-utils
-BuildRequires: kdelibs4-devel >= 4.14
-BuildRequires: pkgconfig(eigen2)
+BuildRequires: extra-cmake-modules >= 1.3
+BuildRequires: kf5-rpm-macros
+BuildRequires: pkgconfig(Qt5Widgets) pkgconfig(Qt5Svg) pkgconfig(Qt5Xml) pkgconfig(Qt5XmlPatterns) pkgconfig(Qt5Test)
 BuildRequires: pkgconfig(libqalculate)
 BuildRequires: pkgconfig(libR)
 BuildRequires: pkgconfig(libspectre)
+BuildRequires: pkgconfig(luajit)
 BuildRequires: python2-devel
-
-Provides: %{name}-part = %{version}-%{release}
+BuildRequires: kf5-kconfig-devel kf5-knewstuff-devel kf5-ktexteditor-devel kf5-kcoreaddons-devel
+BuildRequires: kf5-karchive-devel kf5-kparts-devel kf5-kpty-devel kf5-kdelibs4support-devel
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
-Requires: kate4-part
-%{?kde_runtime_requires}
 
 %description
 %{summary}.
@@ -45,6 +38,7 @@ Requires: kate4-part
 Summary:  Runtime files for %{name}
 # when split occurred
 Conflicts: kdeedu-math-libs < 4.7.0-10
+Provides: %{name}-part = %{version}-%{release}
 Requires: %{name} = %{version}-%{release}
 %description libs
 %{summary}.
@@ -62,19 +56,18 @@ Summary:  Development files for %{name}
 # when split occurred
 Conflicts: kdeedu-devel < 4.7.0-10
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
-Requires: kdelibs4-devel
 %description devel
 %{summary}.
 
 
 %prep
-%setup
+%setup -q
 
 
 %build
 mkdir %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kde4} ..
+%{cmake_kf5} ..
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
@@ -83,126 +76,129 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
-%find_lang %{name} --with-kde --without-mo
-
 
 %check
-desktop-file-validate %{buildroot}%{_kde4_datadir}/applications/kde4/cantor.desktop
+desktop-file-validate %{buildroot}%{_kde4_datadir}/applications/org.kde.cantor.desktop 
 
 
 %post
-touch --no-create %{_kde4_iconsdir}/hicolor &> /dev/null || :
+touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
 
 %posttrans
-gtk-update-icon-cache %{_kde4_iconsdir}/hicolor &> /dev/null || :
+gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
 
 %postun
 if [ $1 -eq 0 ] ; then
-touch --no-create %{_kde4_iconsdir}/hicolor &> /dev/null || :
-gtk-update-icon-cache %{_kde4_iconsdir}/hicolor &> /dev/null || :
+touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
+gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
 fi
 
-%files -f %{name}.lang
-%doc COPYING COPYING.DOC
+%files
 %doc README TODO
-%{_kde4_bindir}/cantor
-%{_kde4_datadir}/appdata/cantor.appdata.xml
-%{_kde4_datadir}/applications/kde4/cantor.desktop
-%{_kde4_datadir}/config.kcfg/cantor.kcfg
-%{_kde4_datadir}/config.kcfg/cantor_libs.kcfg
-%{_kde4_datadir}/config.kcfg/maximabackend.kcfg
-%{_kde4_datadir}/config.kcfg/octavebackend.kcfg
-%{_kde4_datadir}/config.kcfg/python2backend.kcfg
-%{_kde4_datadir}/config.kcfg/qalculatebackend.kcfg
-%{_kde4_datadir}/config.kcfg/sagebackend.kcfg
-%{_kde4_datadir}/config.kcfg/scilabbackend.kcfg
-%{_kde4_configdir}/cantor.knsrc
-%{_kde4_configdir}/cantor_kalgebra.knsrc
-%{_kde4_configdir}/cantor_lua.knsrc
-%{_kde4_configdir}/cantor_python2.knsrc
-%{_kde4_configdir}/cantor_maxima.knsrc
-%{_kde4_configdir}/cantor_octave.knsrc
-%{_kde4_configdir}/cantor_qalculate.knsrc
-%{_kde4_configdir}/cantor_sage.knsrc
-%{_kde4_configdir}/cantor_scilab.knsrc
-%{_kde4_iconsdir}/hicolor/*/*/*
-%{_kde4_appsdir}/cantor/
-%{_kde4_datadir}/kde4/servicetypes/cantor_*.desktop
-%dir %{_kde4_datadir}/kde4/services/cantor/
-%{_kde4_datadir}/kde4/services/cantor/advancedplotassistant.desktop
-%{_kde4_datadir}/kde4/services/cantor/creatematrixassistant.desktop
-%{_kde4_datadir}/kde4/services/cantor/differentiateassistant.desktop
-%{_kde4_datadir}/kde4/services/cantor/eigenvaluesassistant.desktop
-%{_kde4_datadir}/kde4/services/cantor/eigenvectorsassistant.desktop
-%{_kde4_datadir}/kde4/services/cantor/helppanelplugin.desktop
-%{_kde4_datadir}/kde4/services/cantor/importpackageassistant.desktop
-%{_kde4_datadir}/kde4/services/cantor/integrateassistant.desktop
-%{_kde4_datadir}/kde4/services/cantor/invertmatrixassistant.desktop
-%{_kde4_datadir}/kde4/services/cantor/maximabackend.desktop
-%{_kde4_datadir}/kde4/services/cantor/nullbackend.desktop
-%{_kde4_datadir}/kde4/services/cantor/octavebackend.desktop
-%{_kde4_datadir}/kde4/services/cantor/plot2dassistant.desktop
-%{_kde4_datadir}/kde4/services/cantor/plot3dassistant.desktop
-%{_kde4_datadir}/kde4/services/cantor/python2backend.desktop
-%{_kde4_datadir}/kde4/services/cantor/qalculatebackend.desktop
-%{_kde4_datadir}/kde4/services/cantor/qalculateplotassistant.desktop
-%{_kde4_datadir}/kde4/services/cantor/runscriptassistant.desktop
-%{_kde4_datadir}/kde4/services/cantor/sagebackend.desktop
-%{_kde4_datadir}/kde4/services/cantor/scilabbackend.desktop
-%{_kde4_datadir}/kde4/services/cantor/solveassistant.desktop
-%{_kde4_datadir}/kde4/services/cantor/variablemanagerplugin.desktop
-%{_kde4_libdir}/kde4/cantor_advancedplotassistant.so
-%{_kde4_libdir}/kde4/cantor_creatematrixassistant.so
-%{_kde4_libdir}/kde4/cantor_differentiateassistant.so
-%{_kde4_libdir}/kde4/cantor_eigenvaluesassistant.so
-%{_kde4_libdir}/kde4/cantor_eigenvectorsassistant.so
-%{_kde4_libdir}/kde4/cantor_helppanelplugin.so
-%{_kde4_libdir}/kde4/cantor_importpackageassistant.so
-%{_kde4_libdir}/kde4/cantor_integrateassistant.so
-%{_kde4_libdir}/kde4/cantor_invertmatrixassistant.so
-%{_kde4_libdir}/kde4/cantor_maximabackend.so
-%{_kde4_libdir}/kde4/cantor_nullbackend.so
-%{_kde4_libdir}/kde4/cantor_octavebackend.so
-%{_kde4_libdir}/kde4/cantor_plot2dassistant.so
-%{_kde4_libdir}/kde4/cantor_plot3dassistant.so
-%{_kde4_libdir}/kde4/cantor_python2backend.so
-%{_kde4_libdir}/kde4/cantor_qalculatebackend.so
-%{_kde4_libdir}/kde4/cantor_qalculateplotassistant.so
-%{_kde4_libdir}/kde4/cantor_runscriptassistant.so
-%{_kde4_libdir}/kde4/cantor_sagebackend.so
-%{_kde4_libdir}/kde4/cantor_scilabbackend.so
-%{_kde4_libdir}/kde4/cantor_solveassistant.so
-%{_kde4_libdir}/kde4/cantor_variablemanagerplugin.so
-%if 0%{?analitza}
-%{_kde4_datadir}/config.kcfg/kalgebrabackend.kcfg
-%{_kde4_datadir}/kde4/services/cantor/kalgebrabackend.desktop
-%{_kde4_libdir}/kde4/cantor_kalgebrabackend.so
-%endif
-
-#files part
-%{_kde4_libdir}/kde4/libcantorpart.so
-%{_kde4_datadir}/kde4/services/cantor/cantor_part.desktop
+%license COPYING COPYING.DOC
+%{_kf5_docdir}/HTML/en/cantor/
+%{_kf5_bindir}/cantor
+%{_datadir}/appdata/cantor.appdata.xml
+%{_datadir}/applications/org.kde.cantor.desktop
+%{_kf5_sysconfdir}/xdg/cantor.knsrc
+%{_kf5_sysconfdir}/xdg/cantor_kalgebra.knsrc
+%{_kf5_sysconfdir}/xdg/cantor_lua.knsrc
+%{_kf5_sysconfdir}/xdg/cantor_maxima.knsrc
+%{_kf5_sysconfdir}/xdg/cantor_octave.knsrc
+%{_kf5_sysconfdir}/xdg/cantor_python2.knsrc
+%{_kf5_sysconfdir}/xdg/cantor_python3.knsrc
+%{_kf5_sysconfdir}/xdg/cantor_qalculate.knsrc
+%{_kf5_sysconfdir}/xdg/cantor_sage.knsrc
+%{_kf5_sysconfdir}/xdg/cantor_scilab.knsrc
+%{_kf5_bindir}/cantor_python3server
+%{_kf5_libdir}/libcantor_pythonbackend.so
+%dir %{_kf5_datadir}/kxmlgui5/cantor/
+%{_datadir}/icons/hicolor/*/*/*
+%{_kf5_datadir}/cantor/
+%{_kf5_datadir}/config.kcfg/*.kcfg
+%dir %{_kf5_datadir}/kservices5/cantor/
+%{_kf5_datadir}/kservices5/cantor/advancedplotassistant.desktop
+%{_kf5_datadir}/kservices5/cantor/creatematrixassistant.desktop
+%{_kf5_datadir}/kservices5/cantor/differentiateassistant.desktop
+%{_kf5_datadir}/kservices5/cantor/eigenvaluesassistant.desktop
+%{_kf5_datadir}/kservices5/cantor/eigenvectorsassistant.desktop
+%{_kf5_datadir}/kservices5/cantor/helppanelplugin.desktop
+%{_kf5_datadir}/kservices5/cantor/importpackageassistant.desktop
+%{_kf5_datadir}/kservices5/cantor/integrateassistant.desktop
+%{_kf5_datadir}/kservices5/cantor/invertmatrixassistant.desktop
+%{_kf5_datadir}/kservices5/cantor/kalgebrabackend.desktop
+%{_kf5_datadir}/kservices5/cantor/luabackend.desktop
+%{_kf5_datadir}/kservices5/cantor/maximabackend.desktop
+%{_kf5_datadir}/kservices5/cantor/nullbackend.desktop
+%{_kf5_datadir}/kservices5/cantor/octavebackend.desktop
+%{_kf5_datadir}/kservices5/cantor/plot2dassistant.desktop
+%{_kf5_datadir}/kservices5/cantor/plot3dassistant.desktop
+%{_kf5_datadir}/kservices5/cantor/python2backend.desktop
+%{_kf5_datadir}/kservices5/cantor/python3backend.desktop
+%{_kf5_datadir}/kservices5/cantor/qalculatebackend.desktop
+%{_kf5_datadir}/kservices5/cantor/qalculateplotassistant.desktop
+%{_kf5_datadir}/kservices5/cantor/runscriptassistant.desktop
+%{_kf5_datadir}/kservices5/cantor/sagebackend.desktop
+%{_kf5_datadir}/kservices5/cantor/scilabbackend.desktop
+%{_kf5_datadir}/kservices5/cantor/solveassistant.desktop
+%{_kf5_datadir}/kservices5/cantor/variablemanagerplugin.desktop
+%{_kf5_datadir}/kservicetypes5/cantor_assistant.desktop
+%{_kf5_datadir}/kservicetypes5/cantor_backend.desktop
+%{_kf5_datadir}/kservicetypes5/cantor_panelplugin.desktop
+%{_kf5_datadir}/kxmlgui5/cantor/cantor_scripteditor.rc
+%{_kf5_datadir}/kxmlgui5/cantor/cantor_shell.rc
+%{_kf5_qtplugindir}/cantor_advancedplotassistant.so
+%{_kf5_qtplugindir}/cantor_creatematrixassistant.so
+%{_kf5_qtplugindir}/cantor_differentiateassistant.so
+%{_kf5_qtplugindir}/cantor_eigenvaluesassistant.so
+%{_kf5_qtplugindir}/cantor_eigenvectorsassistant.so
+%{_kf5_qtplugindir}/cantor_helppanelplugin.so
+%{_kf5_qtplugindir}/cantor_importpackageassistant.so
+%{_kf5_qtplugindir}/cantor_integrateassistant.so
+%{_kf5_qtplugindir}/cantor_invertmatrixassistant.so
+%{_kf5_qtplugindir}/cantor_kalgebrabackend.so
+%{_kf5_qtplugindir}/cantor_luabackend.so
+%{_kf5_qtplugindir}/cantor_maximabackend.so
+%{_kf5_qtplugindir}/cantor_nullbackend.so
+%{_kf5_qtplugindir}/cantor_octavebackend.so
+%{_kf5_qtplugindir}/cantor_plot2dassistant.so
+%{_kf5_qtplugindir}/cantor_plot3dassistant.so
+%{_kf5_qtplugindir}/cantor_python2backend.so
+%{_kf5_qtplugindir}/cantor_python3backend.so
+%{_kf5_qtplugindir}/cantor_qalculatebackend.so
+%{_kf5_qtplugindir}/cantor_qalculateplotassistant.so
+%{_kf5_qtplugindir}/cantor_runscriptassistant.so
+%{_kf5_qtplugindir}/cantor_sagebackend.so
+%{_kf5_qtplugindir}/cantor_scilabbackend.so
+%{_kf5_qtplugindir}/cantor_solveassistant.so
+%{_kf5_qtplugindir}/cantor_variablemanagerplugin.so
 
 %files R
-%{_kde4_bindir}/cantor_rserver
-%{_kde4_libdir}/kde4/cantor_rbackend.so
-%{_kde4_datadir}/config.kcfg/rserver.kcfg
-%{_kde4_configdir}/cantor_r.knsrc
-%{_kde4_datadir}/kde4/services/cantor/rbackend.desktop
+%{_kf5_bindir}/cantor_rserver
+%{_kf5_qtplugindir}/cantor_rbackend.so
+%{_kf5_datadir}/kservices5/cantor/rbackend.desktop
+%{_kf5_datadir}/config.kcfg/rserver.kcfg
+%{_kf5_sysconfdir}/xdg/cantor_r.knsrc
 
 %post libs -p /sbin/ldconfig
 %postun libs -p /sbin/ldconfig
 
 %files libs
-%{_kde4_libdir}/libcantorlibs.so.*
-%{_kde4_libdir}/libcantor_config.so
+%{_libdir}/libcantorlibs.so.*
+%{_libdir}/libcantor_config.so
+%{_kf5_qtplugindir}/libcantorpart.so
+%{_kf5_datadir}/kservices5/cantor/cantor_part.desktop
+%{_kf5_datadir}/kxmlgui5/cantor/cantor_part.rc
 
 %files devel
-%{_kde4_includedir}/cantor/
-%{_kde4_libdir}/libcantorlibs.so
+%{_includedir}/cantor/
+%{_libdir}/libcantorlibs.so
 
 
 %changelog
+* Thu Apr 09 2015 Rex Dieter <rdieter@fedoraproject.org> 15.03.97-1
+- 15.03.97
+
 * Sun Mar 01 2015 Rex Dieter <rdieter@fedoraproject.org> - 14.12.3-1
 - 14.12.3
 
