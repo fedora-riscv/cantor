@@ -26,6 +26,7 @@ BuildRequires: pkgconfig(libR)
 BuildRequires: pkgconfig(libspectre)
 BuildRequires: pkgconfig(luajit)
 BuildRequires: python2-devel
+BuildRequires: python3-devel
 BuildRequires: kf5-kconfig-devel kf5-knewstuff-devel kf5-ktexteditor-devel kf5-kcoreaddons-devel
 BuildRequires: kf5-karchive-devel kf5-kparts-devel kf5-kpty-devel kf5-kdelibs4support-devel
 
