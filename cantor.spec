@@ -1,8 +1,11 @@
+%ifarch %{arm} %{ix86} x86_64
+%global has_luajit 1
+%endif
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software 
 Version: 15.04.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 License: GPLv2+
 URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
@@ -24,7 +27,9 @@ BuildRequires: pkgconfig(Qt5Widgets) pkgconfig(Qt5Svg) pkgconfig(Qt5Xml) pkgconf
 BuildRequires: pkgconfig(libqalculate)
 BuildRequires: pkgconfig(libR)
 BuildRequires: pkgconfig(libspectre)
+%if 0%{?has_luajit}
 BuildRequires: pkgconfig(luajit)
+%endif
 BuildRequires: python2-devel
 BuildRequires: python3-devel
 BuildRequires: kf5-kconfig-devel kf5-knewstuff-devel kf5-ktexteditor-devel kf5-kcoreaddons-devel
@@ -103,7 +108,9 @@ fi
 %{_datadir}/applications/org.kde.cantor.desktop
 %{_kf5_sysconfdir}/xdg/cantor.knsrc
 %{_kf5_sysconfdir}/xdg/cantor_kalgebra.knsrc
+%if 0%{?has_luajit}
 %{_kf5_sysconfdir}/xdg/cantor_lua.knsrc
+%endif
 %{_kf5_sysconfdir}/xdg/cantor_maxima.knsrc
 %{_kf5_sysconfdir}/xdg/cantor_octave.knsrc
 %{_kf5_sysconfdir}/xdg/cantor_python2.knsrc
@@ -128,7 +135,9 @@ fi
 %{_kf5_datadir}/kservices5/cantor/integrateassistant.desktop
 %{_kf5_datadir}/kservices5/cantor/invertmatrixassistant.desktop
 %{_kf5_datadir}/kservices5/cantor/kalgebrabackend.desktop
+%if 0%{?has_luajit}
 %{_kf5_datadir}/kservices5/cantor/luabackend.desktop
+%endif
 %{_kf5_datadir}/kservices5/cantor/maximabackend.desktop
 %{_kf5_datadir}/kservices5/cantor/nullbackend.desktop
 %{_kf5_datadir}/kservices5/cantor/octavebackend.desktop
@@ -158,7 +167,9 @@ fi
 %{_kf5_qtplugindir}/cantor_integrateassistant.so
 %{_kf5_qtplugindir}/cantor_invertmatrixassistant.so
 %{_kf5_qtplugindir}/cantor_kalgebrabackend.so
+%if 0%{?has_luajit}
 %{_kf5_qtplugindir}/cantor_luabackend.so
+%endif
 %{_kf5_qtplugindir}/cantor_maximabackend.so
 %{_kf5_qtplugindir}/cantor_nullbackend.so
 %{_kf5_qtplugindir}/cantor_octavebackend.so
@@ -197,6 +208,9 @@ fi
 
 
 %changelog
+* Sun May  3 2015 Peter Robinson <pbrobinson@fedoraproject.org> 15.04.0-2
+- LuaJIT not available on all architectures
+
 * Thu Apr 09 2015 Rex Dieter <rdieter@fedoraproject.org> 15.04.0-1
 - 15.04.0
 
