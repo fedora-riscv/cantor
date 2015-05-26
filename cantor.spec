@@ -4,8 +4,8 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software 
-Version: 15.04.0
-Release: 2%{?dist}
+Version: 15.04.1
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
@@ -208,6 +208,9 @@ fi
 
 
 %changelog
+* Tue May 26 2015 Rex Dieter <rdieter@fedoraproject.org> - 15.04.1-1
+- 15.04.1
+
 * Sun May  3 2015 Peter Robinson <pbrobinson@fedoraproject.org> 15.04.0-2
 - LuaJIT not available on all architectures
 
