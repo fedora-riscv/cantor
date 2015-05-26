@@ -18,6 +18,8 @@ URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
 Source0: http://download.kde.org/%{stable}/applications/%{version}/src/%{name}-%{version}.tar.xz
 
 ## upstream patches
+# master branch
+Patch1: Fix-build-with-latest-R-version-3.2.patch
 
 BuildRequires: analitza-devel >= 14.12
 BuildRequires: desktop-file-utils
@@ -70,6 +72,8 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 %prep
 %setup -q
 
+%patch1 -p1 -b .fix_build_with_R_32
+
 
 %build
 mkdir %{_target_platform}
@@ -83,11 +87,16 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
+# Add Comment key to .desktop file
 grep '^Comment=' %{buildroot}%{_kde4_datadir}/applications/org.kde.%{name}.desktop || \
 desktop-file-install \
   --dir=%{buildroot}%{_kde4_datadir}/applications \
   --set-comment="%{summary}" \
   %{buildroot}%{_kde4_datadir}/applications/org.kde.%{name}.desktop
+
+# rename appdata
+mv %{buildroot}%{_kde4_datadir}/appdata/%{name}.appdata.xml \
+   %{buildroot}%{_kde4_datadir}/appdata/org.kde.%{name}.appdata.xml
 
 
 %check
