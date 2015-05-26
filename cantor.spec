@@ -34,6 +34,7 @@ BuildRequires: python2-devel
 BuildRequires: python3-devel
 BuildRequires: kf5-kconfig-devel kf5-knewstuff-devel kf5-ktexteditor-devel kf5-kcoreaddons-devel
 BuildRequires: kf5-karchive-devel kf5-kparts-devel kf5-kpty-devel kf5-kdelibs4support-devel
+BuildRequires: libappstream-glib
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 
@@ -82,9 +83,16 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
+grep '^Comment=' %{buildroot}%{_kde4_datadir}/applications/org.kde.%{name}.desktop || \
+desktop-file-install \
+  --dir=%{buildroot}%{_kde4_datadir}/applications \
+  --set-comment="%{summary}" \
+  %{buildroot}%{_kde4_datadir}/applications/org.kde.%{name}.desktop
+
 
 %check
-desktop-file-validate %{buildroot}%{_kde4_datadir}/applications/org.kde.cantor.desktop 
+appstream-util validate-relax --nonet %{buildroot}%{_kde4_datadir}/appdata/org.kde.%{name}.appdata.xml ||:
+desktop-file-validate %{buildroot}%{_kde4_datadir}/applications/org.kde.%{name}.desktop
 
 
 %post
@@ -104,8 +112,8 @@ fi
 %license COPYING COPYING.DOC
 %{_kf5_docdir}/HTML/en/cantor/
 %{_kf5_bindir}/cantor
-%{_datadir}/appdata/cantor.appdata.xml
-%{_datadir}/applications/org.kde.cantor.desktop
+%{_kde4_datadir}/appdata/org.kde.%{name}.appdata.xml
+%{_kde4_datadir}/applications/org.kde.%{name}.desktop
 %{_kf5_sysconfdir}/xdg/cantor.knsrc
 %{_kf5_sysconfdir}/xdg/cantor_kalgebra.knsrc
 %if 0%{?has_luajit}
