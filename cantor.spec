@@ -88,20 +88,20 @@ make %{?_smp_mflags} -C %{_target_platform}
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 # Add Comment key to .desktop file
-grep '^Comment=' %{buildroot}%{_kde4_datadir}/applications/org.kde.%{name}.desktop || \
+grep '^Comment=' %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.desktop || \
 desktop-file-install \
-  --dir=%{buildroot}%{_kde4_datadir}/applications \
+  --dir=%{buildroot}%{_kf5_datadir}/applications \
   --set-comment="%{summary}" \
-  %{buildroot}%{_kde4_datadir}/applications/org.kde.%{name}.desktop
+  %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.desktop
 
 # rename appdata
-mv %{buildroot}%{_kde4_datadir}/appdata/%{name}.appdata.xml \
-   %{buildroot}%{_kde4_datadir}/appdata/org.kde.%{name}.appdata.xml
+mv %{buildroot}%{_kf5_datadir}/appdata/%{name}.appdata.xml \
+   %{buildroot}%{_kf5_datadir}/appdata/org.kde.%{name}.appdata.xml
 
 
 %check
-appstream-util validate-relax --nonet %{buildroot}%{_kde4_datadir}/appdata/org.kde.%{name}.appdata.xml ||:
-desktop-file-validate %{buildroot}%{_kde4_datadir}/applications/org.kde.%{name}.desktop
+appstream-util validate-relax --nonet %{buildroot}%{_kf5_datadir}/appdata/org.kde.%{name}.appdata.xml ||:
+desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.desktop
 
 
 %post
@@ -121,8 +121,8 @@ fi
 %license COPYING COPYING.DOC
 %{_kf5_docdir}/HTML/en/cantor/
 %{_kf5_bindir}/cantor
-%{_kde4_datadir}/appdata/org.kde.%{name}.appdata.xml
-%{_kde4_datadir}/applications/org.kde.%{name}.desktop
+%{_kf5_datadir}/appdata/org.kde.%{name}.appdata.xml
+%{_kf5_datadir}/applications/org.kde.%{name}.desktop
 %{_kf5_sysconfdir}/xdg/cantor.knsrc
 %{_kf5_sysconfdir}/xdg/cantor_kalgebra.knsrc
 %if 0%{?has_luajit}
