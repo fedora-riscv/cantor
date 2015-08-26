@@ -18,6 +18,7 @@ URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
 Source0: http://download.kde.org/%{stable}/applications/%{version}/src/%{name}-%{version}.tar.xz
 
 ## upstream patches
+Patch1: cantor-15.08.0-fix--buliding-the-qalculate-backend.patch
 
 BuildRequires: analitza-devel >= 14.12
 BuildRequires: desktop-file-utils
@@ -70,6 +71,7 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 %prep
 %setup -q
 
+%patch1 -p1 -b .qalculate
 
 %build
 mkdir %{_target_platform}
