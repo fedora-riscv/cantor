@@ -92,11 +92,6 @@ desktop-file-install \
   --set-comment="%{summary}" \
   %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.desktop
 
-# rename appdata
-mv %{buildroot}%{_kf5_datadir}/appdata/%{name}.appdata.xml \
-   %{buildroot}%{_kf5_datadir}/appdata/org.kde.%{name}.appdata.xml
-
-
 %check
 appstream-util validate-relax --nonet %{buildroot}%{_kf5_datadir}/appdata/org.kde.%{name}.appdata.xml ||:
 desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.desktop
