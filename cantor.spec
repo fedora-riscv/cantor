@@ -3,7 +3,7 @@
 %endif
 
 Name:    cantor
-Summary: KDE Frontend to Mathematical Software 
+Summary: KDE Frontend to Mathematical Software
 Version: 15.08.0
 Release: 1%{?dist}
 
@@ -18,8 +18,6 @@ URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
 Source0: http://download.kde.org/%{stable}/applications/%{version}/src/%{name}-%{version}.tar.xz
 
 ## upstream patches
-# master branch
-Patch1: Fix-build-with-latest-R-version-3.2.patch
 
 BuildRequires: analitza-devel >= 14.12
 BuildRequires: desktop-file-utils
@@ -71,8 +69,6 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 
 %prep
 %setup -q
-
-%patch1 -p1 -b .fix_build_with_R_32
 
 
 %build
