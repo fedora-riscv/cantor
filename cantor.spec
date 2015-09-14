@@ -4,7 +4,7 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 15.08.0
+Version: 15.08.1
 Release: 1%{?dist}
 
 License: GPLv2+
@@ -18,7 +18,6 @@ URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
 Source0: http://download.kde.org/%{stable}/applications/%{version}/src/%{name}-%{version}.tar.xz
 
 ## upstream patches
-Patch1: cantor-15.08.0-fix--buliding-the-qalculate-backend.patch
 
 BuildRequires: analitza-devel >= 14.12
 BuildRequires: desktop-file-utils
@@ -71,7 +70,6 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 %prep
 %setup -q
 
-%patch1 -p1 -b .qalculate
 
 %build
 mkdir %{_target_platform}
@@ -91,6 +89,7 @@ desktop-file-install \
   --dir=%{buildroot}%{_kf5_datadir}/applications \
   --set-comment="%{summary}" \
   %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.desktop
+
 
 %check
 appstream-util validate-relax --nonet %{buildroot}%{_kf5_datadir}/appdata/org.kde.%{name}.appdata.xml ||:
@@ -218,6 +217,9 @@ fi
 
 
 %changelog
+* Mon Sep 14 2015 Rex Dieter <rdieter@fedoraproject.org> - 15.08.1-1
+- 15.08.1
+
 * Thu Aug 20 2015 Than Ngo <than@redhat.com> - 15.08.0-1
 - 15.08.0
 
