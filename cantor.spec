@@ -1,11 +1,8 @@
-%ifarch %{arm} %{ix86} x86_64
-%global has_luajit 1
-%endif
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 15.08.1
-Release: 2%{?dist}
+Version: 15.08.3
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
@@ -17,24 +14,33 @@ URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
 %endif
 Source0: http://download.kde.org/%{stable}/applications/%{version}/src/%{name}-%{version}.tar.xz
 
-## upstream patches
+## upstreamable patches
+Patch1: cantor-15.08.3-py35.patch
 
 BuildRequires: analitza-devel >= 14.12
+BuildRequires: cmake
 BuildRequires: desktop-file-utils
 BuildRequires: extra-cmake-modules >= 1.3
+BuildRequires: kf5-karchive-devel
+BuildRequires: kf5-kconfig-devel
+BuildRequires: kf5-kcoreaddons-devel
+BuildRequires: kf5-kdelibs4support-devel
+BuildRequires: kf5-knewstuff-devel
+BuildRequires: kf5-kparts-devel
+BuildRequires: kf5-kpty-devel
+BuildRequires: kf5-ktexteditor-devel
 BuildRequires: kf5-rpm-macros
-BuildRequires: pkgconfig(Qt5Widgets) pkgconfig(Qt5Svg) pkgconfig(Qt5Xml) pkgconfig(Qt5XmlPatterns) pkgconfig(Qt5Test)
+BuildRequires: libappstream-glib
 BuildRequires: pkgconfig(libqalculate)
 BuildRequires: pkgconfig(libR)
 BuildRequires: pkgconfig(libspectre)
-%if 0%{?has_luajit}
+%ifarch %{arm} %{ix86} x86_64
 BuildRequires: pkgconfig(luajit)
+%global has_luajit 1
 %endif
+BuildRequires: pkgconfig(Qt5Widgets) pkgconfig(Qt5Svg) pkgconfig(Qt5Xml) pkgconfig(Qt5XmlPatterns) pkgconfig(Qt5Test)
 BuildRequires: python2-devel
 BuildRequires: python3-devel
-BuildRequires: kf5-kconfig-devel kf5-knewstuff-devel kf5-ktexteditor-devel kf5-kcoreaddons-devel
-BuildRequires: kf5-karchive-devel kf5-kparts-devel kf5-kpty-devel kf5-kdelibs4support-devel
-BuildRequires: libappstream-glib
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 
@@ -68,7 +74,7 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 
 
 %prep
-%setup -q
+%autosetup -p1
 
 
 %build
@@ -217,6 +223,9 @@ fi
 
 
 %changelog
+* Fri Nov 13 2015 Rex Dieter <rdieter@fedoraproject.org> 15.08.3-1
+- 15.08.3, python-3.5 fix, .spec cosmetics
+
 * Tue Nov 10 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 15.08.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Changes/python3.5
 
