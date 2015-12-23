@@ -139,71 +139,28 @@ fi
 %{_datadir}/icons/hicolor/*/*/*
 %{_kf5_datadir}/cantor/
 %{_kf5_datadir}/config.kcfg/*.kcfg
-%dir %{_kf5_datadir}/kservices5/cantor/
-%{_kf5_datadir}/kservices5/cantor/advancedplotassistant.desktop
-%{_kf5_datadir}/kservices5/cantor/creatematrixassistant.desktop
-%{_kf5_datadir}/kservices5/cantor/differentiateassistant.desktop
-%{_kf5_datadir}/kservices5/cantor/eigenvaluesassistant.desktop
-%{_kf5_datadir}/kservices5/cantor/eigenvectorsassistant.desktop
-%{_kf5_datadir}/kservices5/cantor/helppanelplugin.desktop
-%{_kf5_datadir}/kservices5/cantor/importpackageassistant.desktop
-%{_kf5_datadir}/kservices5/cantor/integrateassistant.desktop
-%{_kf5_datadir}/kservices5/cantor/invertmatrixassistant.desktop
-%{_kf5_datadir}/kservices5/cantor/kalgebrabackend.desktop
-%if 0%{?has_luajit}
-%{_kf5_datadir}/kservices5/cantor/luabackend.desktop
-%endif
-%{_kf5_datadir}/kservices5/cantor/maximabackend.desktop
-%{_kf5_datadir}/kservices5/cantor/nullbackend.desktop
-%{_kf5_datadir}/kservices5/cantor/octavebackend.desktop
-%{_kf5_datadir}/kservices5/cantor/plot2dassistant.desktop
-%{_kf5_datadir}/kservices5/cantor/plot3dassistant.desktop
-%{_kf5_datadir}/kservices5/cantor/python2backend.desktop
-%{_kf5_datadir}/kservices5/cantor/python3backend.desktop
-%{_kf5_datadir}/kservices5/cantor/qalculatebackend.desktop
-%{_kf5_datadir}/kservices5/cantor/qalculateplotassistant.desktop
-%{_kf5_datadir}/kservices5/cantor/runscriptassistant.desktop
-%{_kf5_datadir}/kservices5/cantor/sagebackend.desktop
-%{_kf5_datadir}/kservices5/cantor/scilabbackend.desktop
-%{_kf5_datadir}/kservices5/cantor/solveassistant.desktop
-%{_kf5_datadir}/kservices5/cantor/variablemanagerplugin.desktop
-%{_kf5_datadir}/kservicetypes5/cantor_assistant.desktop
-%{_kf5_datadir}/kservicetypes5/cantor_backend.desktop
-%{_kf5_datadir}/kservicetypes5/cantor_panelplugin.desktop
 %{_kf5_datadir}/kxmlgui5/cantor/cantor_scripteditor.rc
 %{_kf5_datadir}/kxmlgui5/cantor/cantor_shell.rc
-%{_kf5_qtplugindir}/cantor_advancedplotassistant.so
-%{_kf5_qtplugindir}/cantor_creatematrixassistant.so
-%{_kf5_qtplugindir}/cantor_differentiateassistant.so
-%{_kf5_qtplugindir}/cantor_eigenvaluesassistant.so
-%{_kf5_qtplugindir}/cantor_eigenvectorsassistant.so
-%{_kf5_qtplugindir}/cantor_helppanelplugin.so
-%{_kf5_qtplugindir}/cantor_importpackageassistant.so
-%{_kf5_qtplugindir}/cantor_integrateassistant.so
-%{_kf5_qtplugindir}/cantor_invertmatrixassistant.so
-%{_kf5_qtplugindir}/cantor_kalgebrabackend.so
+%dir %{_kf5_qtplugindir}/cantor/
+%{_kf5_qtplugindir}/cantor/assistants/
+%{_kf5_qtplugindir}/cantor/panels/
+%dir %{_kf5_qtplugindir}/cantor/backends/
+%{_kf5_qtplugindir}/cantor/backends/cantor_kalgebrabackend.so
 %if 0%{?has_luajit}
-%{_kf5_qtplugindir}/cantor_luabackend.so
+%{_kf5_qtplugindir}/cantor/backends/cantor_luabackend.so
 %endif
-%{_kf5_qtplugindir}/cantor_maximabackend.so
-%{_kf5_qtplugindir}/cantor_nullbackend.so
-%{_kf5_qtplugindir}/cantor_octavebackend.so
-%{_kf5_qtplugindir}/cantor_plot2dassistant.so
-%{_kf5_qtplugindir}/cantor_plot3dassistant.so
-%{_kf5_qtplugindir}/cantor_python2backend.so
-%{_kf5_qtplugindir}/cantor_python3backend.so
-%{_kf5_qtplugindir}/cantor_qalculatebackend.so
-%{_kf5_qtplugindir}/cantor_qalculateplotassistant.so
-%{_kf5_qtplugindir}/cantor_runscriptassistant.so
-%{_kf5_qtplugindir}/cantor_sagebackend.so
-%{_kf5_qtplugindir}/cantor_scilabbackend.so
-%{_kf5_qtplugindir}/cantor_solveassistant.so
-%{_kf5_qtplugindir}/cantor_variablemanagerplugin.so
+%{_kf5_qtplugindir}/cantor/backends/cantor_maximabackend.so
+%{_kf5_qtplugindir}/cantor/backends/cantor_nullbackend.so
+%{_kf5_qtplugindir}/cantor/backends/cantor_octavebackend.so
+%{_kf5_qtplugindir}/cantor/backends/cantor_python2backend.so
+%{_kf5_qtplugindir}/cantor/backends/cantor_python3backend.so
+%{_kf5_qtplugindir}/cantor/backends/cantor_qalculatebackend.so
+%{_kf5_qtplugindir}/cantor/backends/cantor_sagebackend.so
+%{_kf5_qtplugindir}/cantor/backends/cantor_scilabbackend.so
 
 %files R
 %{_kf5_bindir}/cantor_rserver
-%{_kf5_qtplugindir}/cantor_rbackend.so
-%{_kf5_datadir}/kservices5/cantor/rbackend.desktop
+%{_kf5_qtplugindir}/cantor/backends/cantor_rbackend.so
 %{_kf5_datadir}/config.kcfg/rserver.kcfg
 %{_kf5_sysconfdir}/xdg/cantor_r.knsrc
 
@@ -214,7 +171,6 @@ fi
 %{_libdir}/libcantorlibs.so.*
 %{_libdir}/libcantor_config.so
 %{_kf5_qtplugindir}/libcantorpart.so
-%{_kf5_datadir}/kservices5/cantor/cantor_part.desktop
 %{_kf5_datadir}/kxmlgui5/cantor/cantor_part.rc
 
 %files devel
@@ -223,6 +179,9 @@ fi
 
 
 %changelog
+* Wed Dec 23 2015 Rex Dieter <rdieter@fedoraproject.org> 15.12.0-1
+- 15.12.0
+
 * Wed Dec 23 2015 Rex Dieter <rdieter@fedoraproject.org> 15.08.3-2
 - cosmetics, bump analitza dep
 
