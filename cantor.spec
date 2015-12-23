@@ -1,8 +1,8 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 15.08.3
-Release: 2%{?dist}
+Version: 15.12.0
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     https://projects.kde.org/cantor
@@ -15,7 +15,6 @@ URL:     https://projects.kde.org/cantor
 Source0: http://download.kde.org/%{stable}/applications/%{version}/src/%{name}-%{version}.tar.xz
 
 ## upstreamable patches
-Patch1: cantor-15.08.3-py35.patch
 
 %global majmin_ver %(echo %{version} | cut -d. -f1,2)
 BuildRequires: analitza-devel >= %{majmin_ver}
