@@ -2,10 +2,10 @@
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
 Version: 15.08.3
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 License: GPLv2+
-URL:     https://projects.kde.org/projects/kde/kdeedu/cantor
+URL:     https://projects.kde.org/cantor
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
 %global stable unstable
@@ -17,7 +17,8 @@ Source0: http://download.kde.org/%{stable}/applications/%{version}/src/%{name}-%
 ## upstreamable patches
 Patch1: cantor-15.08.3-py35.patch
 
-BuildRequires: analitza-devel >= 14.12
+%global majmin_ver %(echo %{version} | cut -d. -f1,2)
+BuildRequires: analitza-devel >= %{majmin_ver}
 BuildRequires: cmake
 BuildRequires: desktop-file-utils
 BuildRequires: extra-cmake-modules >= 1.3
@@ -223,6 +224,9 @@ fi
 
 
 %changelog
+* Wed Dec 23 2015 Rex Dieter <rdieter@fedoraproject.org> 15.08.3-2
+- cosmetics, bump analitza dep
+
 * Fri Nov 13 2015 Rex Dieter <rdieter@fedoraproject.org> 15.08.3-1
 - 15.08.3, python-3.5 fix, .spec cosmetics
 
