@@ -1,8 +1,8 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 15.12.1
-Release: 2%{?dist}
+Version: 15.12.2
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     https://projects.kde.org/cantor
@@ -179,6 +179,9 @@ fi
 
 
 %changelog
+* Sun Feb 14 2016 Rex Dieter <rdieter@fedoraproject.org> - 15.12.2-1
+- 15.12.2
+
 * Wed Feb 03 2016 Fedora Release Engineering <releng@fedoraproject.org> - 15.12.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
