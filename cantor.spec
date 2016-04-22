@@ -1,11 +1,12 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 15.12.3
+Version: 16.04.0
 Release: 1%{?dist}
 
 License: GPLv2+
-URL:     https://projects.kde.org/cantor
+URL:     https://quickgit.kde.org/?p=%{name}.git
+
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
 %global stable unstable
@@ -18,7 +19,6 @@ Source0: http://download.kde.org/%{stable}/applications/%{version}/src/%{name}-%
 
 %global majmin_ver %(echo %{version} | cut -d. -f1,2)
 BuildRequires: analitza-devel >= %{majmin_ver}
-BuildRequires: cmake
 BuildRequires: desktop-file-utils
 BuildRequires: extra-cmake-modules >= 1.3
 BuildRequires: kf5-karchive-devel
@@ -179,6 +179,9 @@ fi
 
 
 %changelog
+* Fri Apr 22 2016 Rex Dieter <rdieter@fedoraproject.org> - 16.04.0-1
+- 16.04.0
+
 * Tue Mar 15 2016 Rex Dieter <rdieter@fedoraproject.org> - 15.12.3-1
 - 15.12.3
 
