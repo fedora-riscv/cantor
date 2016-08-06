@@ -1,7 +1,7 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 16.07.80
+Version: 16.07.90
 Release: 1%{?dist}
 
 License: GPLv2+
@@ -179,6 +179,9 @@ fi
 
 
 %changelog
+* Sat Aug 06 2016 Rex Dieter <rdieter@fedoraproject.org> - 16.07.90-1
+- 16.07.90
+
 * Sat Jul 30 2016 Rex Dieter <rdieter@fedoraproject.org> - 16.07.80-1
 - 16.07.80
 
