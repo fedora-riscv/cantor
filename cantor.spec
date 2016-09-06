@@ -2,7 +2,7 @@
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
 Version: 16.08.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 
 License: GPLv2+
 URL:     https://quickgit.kde.org/?p=%{name}.git
@@ -49,7 +49,9 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 
 %package -n python2-%{name}
 Summary: %{name} python2 backend
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Requires: %{name}-libs%{?_isa} = %{version}-%{release}
+# upgrade path, when split out
+Obsoletes: cantor <  16.08.0-3
 %{?python_provide:%python_provide python2-%{name}}
 
 %description -n python2-%{name}
@@ -57,7 +59,8 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %package -n python3-%{name}
 Summary: %{name} python3 backend
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Requires: %{name}-libs%{?_isa} = %{version}-%{release}
+Obsoletes: cantor <  16.08.0-3
 %{?python_provide:%python_provide python3-%{name}}
 
 %description -n python3-%{name}
@@ -76,7 +79,7 @@ Requires: %{name} = %{version}-%{release}
 Summary: R backend for %{name}
 Obsoletes: kdeedu-math-cantor-R < 4.7.0-10
 Provides:  kdeedu-math-cantor-R = %{version}-%{release}
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 %description R 
 %{summary}.
 
@@ -147,29 +150,14 @@ fi
 %{_kf5_sysconfdir}/xdg/cantor_qalculate.knsrc
 %{_kf5_sysconfdir}/xdg/cantor_sage.knsrc
 %{_kf5_sysconfdir}/xdg/cantor_scilab.knsrc
-%{_kf5_libdir}/libcantor_pythonbackend.so
 %dir %{_kf5_datadir}/kxmlgui5/cantor/
 %{_datadir}/icons/hicolor/*/*/*
 %{_kf5_datadir}/cantor/
 %{_kf5_datadir}/config.kcfg/*.kcfg
-%{_kf5_datadir}/kxmlgui5/cantor/cantor_scripteditor.rc
-%{_kf5_datadir}/kxmlgui5/cantor/cantor_shell.rc
-%dir %{_kf5_qtplugindir}/cantor/
-%{_kf5_qtplugindir}/cantor/assistants/
-%{_kf5_qtplugindir}/cantor/panels/
-%dir %{_kf5_qtplugindir}/cantor/backends/
-%{_kf5_qtplugindir}/cantor/backends/cantor_kalgebrabackend.so
-%if 0%{?has_luajit}
-%{_kf5_qtplugindir}/cantor/backends/cantor_luabackend.so
-%endif
-%{_kf5_qtplugindir}/cantor/backends/cantor_maximabackend.so
-%{_kf5_qtplugindir}/cantor/backends/cantor_nullbackend.so
-%{_kf5_qtplugindir}/cantor/backends/cantor_octavebackend.so
-%{_kf5_qtplugindir}/cantor/backends/cantor_qalculatebackend.so
-%{_kf5_qtplugindir}/cantor/backends/cantor_sagebackend.so
-%{_kf5_qtplugindir}/cantor/backends/cantor_scilabbackend.so
 %exclude %{_kf5_datadir}/config.kcfg/python2backend.kcfg
 %exclude %{_kf5_datadir}/config.kcfg/python3backend.kcfg
+%{_kf5_datadir}/kxmlgui5/cantor/cantor_scripteditor.rc
+%{_kf5_datadir}/kxmlgui5/cantor/cantor_shell.rc
 
 %files -n python2-%{name}
 %{_kf5_sysconfdir}/xdg/cantor_python2.knsrc
@@ -196,6 +184,23 @@ fi
 %{_libdir}/libcantor_config.so
 %{_kf5_qtplugindir}/libcantorpart.so
 %{_kf5_datadir}/kxmlgui5/cantor/cantor_part.rc
+## plugins
+# here ok or in python subpkgs ?  --rex
+%{_kf5_libdir}/libcantor_pythonbackend.so
+%dir %{_kf5_qtplugindir}/cantor/
+%{_kf5_qtplugindir}/cantor/assistants/
+%{_kf5_qtplugindir}/cantor/panels/
+%dir %{_kf5_qtplugindir}/cantor/backends/
+%{_kf5_qtplugindir}/cantor/backends/cantor_kalgebrabackend.so
+%if 0%{?has_luajit}
+%{_kf5_qtplugindir}/cantor/backends/cantor_luabackend.so
+%endif
+%{_kf5_qtplugindir}/cantor/backends/cantor_maximabackend.so
+%{_kf5_qtplugindir}/cantor/backends/cantor_nullbackend.so
+%{_kf5_qtplugindir}/cantor/backends/cantor_octavebackend.so
+%{_kf5_qtplugindir}/cantor/backends/cantor_qalculatebackend.so
+%{_kf5_qtplugindir}/cantor/backends/cantor_sagebackend.so
+%{_kf5_qtplugindir}/cantor/backends/cantor_scilabbackend.so
 
 %files devel
 %{_includedir}/cantor/
@@ -203,6 +208,11 @@ fi
 
 
 %changelog
+* Tue Sep 06 2016 Rex Dieter <rdieter@fedoraproject.org> 
+- 16.08.0-4
+- python subpkgs: add Obsoletes for upgrade path
+- multilib fixes: move plugins to -libs, make plugins depend on -libs
+
 * Tue Sep 06 2016 Than Ngo <than@redhat.com> - 16.08.0-3
 - fixed bz#1342488 - cantor requires both Python 2 and Python 3 
 
