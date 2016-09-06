@@ -2,7 +2,7 @@
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
 Version: 16.08.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 License: GPLv2+
 URL:     https://quickgit.kde.org/?p=%{name}.git
@@ -46,6 +46,22 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 
 %description
 %{summary}.
+
+%package -n python2-%{name}
+Summary: %{name} python2 backend
+Requires: %{name}%{?_isa} = %{version}-%{release}
+%{?python_provide:%python_provide python2-%{name}}
+
+%description -n python2-%{name}
+%{name} python2 backend.
+
+%package -n python3-%{name}
+Summary: %{name} python3 backend
+Requires: %{name}%{?_isa} = %{version}-%{release}
+%{?python_provide:%python_provide python3-%{name}}
+
+%description -n python3-%{name}
+%{name} python3 backend.
 
 %package  libs
 Summary:  Runtime files for %{name}
@@ -128,12 +144,9 @@ fi
 %endif
 %{_kf5_sysconfdir}/xdg/cantor_maxima.knsrc
 %{_kf5_sysconfdir}/xdg/cantor_octave.knsrc
-%{_kf5_sysconfdir}/xdg/cantor_python2.knsrc
-%{_kf5_sysconfdir}/xdg/cantor_python3.knsrc
 %{_kf5_sysconfdir}/xdg/cantor_qalculate.knsrc
 %{_kf5_sysconfdir}/xdg/cantor_sage.knsrc
 %{_kf5_sysconfdir}/xdg/cantor_scilab.knsrc
-%{_kf5_bindir}/cantor_python3server
 %{_kf5_libdir}/libcantor_pythonbackend.so
 %dir %{_kf5_datadir}/kxmlgui5/cantor/
 %{_datadir}/icons/hicolor/*/*/*
@@ -152,11 +165,22 @@ fi
 %{_kf5_qtplugindir}/cantor/backends/cantor_maximabackend.so
 %{_kf5_qtplugindir}/cantor/backends/cantor_nullbackend.so
 %{_kf5_qtplugindir}/cantor/backends/cantor_octavebackend.so
-%{_kf5_qtplugindir}/cantor/backends/cantor_python2backend.so
-%{_kf5_qtplugindir}/cantor/backends/cantor_python3backend.so
 %{_kf5_qtplugindir}/cantor/backends/cantor_qalculatebackend.so
 %{_kf5_qtplugindir}/cantor/backends/cantor_sagebackend.so
 %{_kf5_qtplugindir}/cantor/backends/cantor_scilabbackend.so
+%exclude %{_kf5_datadir}/config.kcfg/python2backend.kcfg
+%exclude %{_kf5_datadir}/config.kcfg/python3backend.kcfg
+
+%files -n python2-%{name}
+%{_kf5_sysconfdir}/xdg/cantor_python2.knsrc
+%{_kf5_qtplugindir}/cantor/backends/cantor_python2backend.so
+%{_kf5_datadir}/config.kcfg/python2backend.kcfg
+
+%files -n python3-%{name}
+%{_kf5_sysconfdir}/xdg/cantor_python3.knsrc
+%{_kf5_bindir}/cantor_python3server
+%{_kf5_qtplugindir}/cantor/backends/cantor_python3backend.so
+%{_kf5_datadir}/config.kcfg/python3backend.kcfg
 
 %files R
 %{_kf5_bindir}/cantor_rserver
@@ -179,6 +203,9 @@ fi
 
 
 %changelog
+* Tue Sep 06 2016 Than Ngo <than@redhat.com> - 16.08.0-3
+- fixed bz#1342488 - cantor requires both Python 2 and Python 3 
+
 * Mon Aug 29 2016 Igor Gnatenko <ignatenko@redhat.com> - 16.08.0-2
 - Rebuild for LuaJIT 2.1.0
 
