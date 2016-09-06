@@ -34,9 +34,11 @@ BuildRequires: libappstream-glib
 BuildRequires: pkgconfig(libqalculate)
 BuildRequires: pkgconfig(libR)
 BuildRequires: pkgconfig(libspectre)
+%if 0%{?fedora} < 25
 %ifarch %{arm} %{ix86} x86_64
 BuildRequires: pkgconfig(luajit)
 %global has_luajit 1
+%endif
 %endif
 BuildRequires: pkgconfig(Qt5Widgets) pkgconfig(Qt5Svg) pkgconfig(Qt5Xml) pkgconfig(Qt5XmlPatterns) pkgconfig(Qt5Test)
 BuildRequires: python2-devel
@@ -208,10 +210,10 @@ fi
 
 
 %changelog
-* Tue Sep 06 2016 Rex Dieter <rdieter@fedoraproject.org> 
-- 16.08.0-4
+* Tue Sep 06 2016 Rex Dieter <rdieter@fedoraproject.org> - 16.08.0-4
 - python subpkgs: add Obsoletes for upgrade path
 - multilib fixes: move plugins to -libs, make plugins depend on -libs
+- omit/workaround luajit FTBFS on f25+ (for now)
 
 * Tue Sep 06 2016 Than Ngo <than@redhat.com> - 16.08.0-3
 - fixed bz#1342488 - cantor requires both Python 2 and Python 3 
