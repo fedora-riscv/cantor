@@ -2,7 +2,7 @@
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
 Version: 16.08.0
-Release: 5%{?dist}
+Release: 6%{?dist}
 
 License: GPLv2+
 URL:     https://quickgit.kde.org/?p=%{name}.git
@@ -16,7 +16,9 @@ URL:     https://quickgit.kde.org/?p=%{name}.git
 Source0: http://download.kde.org/%{stable}/applications/%{version}/src/%{name}-%{version}.tar.xz
 
 ## upstreamable patches
+%if 0%{?fedora} > 25
 Patch100: cantor-16.08.0-luajit.patch
+%endif
 
 %global majmin_ver %(echo %{version} | cut -d. -f1,2)
 BuildRequires: analitza-devel >= %{majmin_ver}
@@ -209,6 +211,9 @@ fi
 
 
 %changelog
+* Tue Sep 06 2016 Than Ngo <than@redhat.com> - 16.08.0-6
+- fix build failure with luajit 2.1
+
 * Tue Sep 06 2016 Rex Dieter <rdieter@fedoraproject.org> - 16.08.0-5
 - fix luajit-2.1 detection (#1371250)
 
