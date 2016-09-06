@@ -2,7 +2,7 @@
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
 Version: 16.08.0
-Release: 4%{?dist}
+Release: 5%{?dist}
 
 License: GPLv2+
 URL:     https://quickgit.kde.org/?p=%{name}.git
@@ -16,6 +16,7 @@ URL:     https://quickgit.kde.org/?p=%{name}.git
 Source0: http://download.kde.org/%{stable}/applications/%{version}/src/%{name}-%{version}.tar.xz
 
 ## upstreamable patches
+Patch100: cantor-16.08.0-luajit.patch
 
 %global majmin_ver %(echo %{version} | cut -d. -f1,2)
 BuildRequires: analitza-devel >= %{majmin_ver}
@@ -34,11 +35,9 @@ BuildRequires: libappstream-glib
 BuildRequires: pkgconfig(libqalculate)
 BuildRequires: pkgconfig(libR)
 BuildRequires: pkgconfig(libspectre)
-%if 0%{?fedora} < 25
 %ifarch %{arm} %{ix86} x86_64
 BuildRequires: pkgconfig(luajit)
 %global has_luajit 1
-%endif
 %endif
 BuildRequires: pkgconfig(Qt5Widgets) pkgconfig(Qt5Svg) pkgconfig(Qt5Xml) pkgconfig(Qt5XmlPatterns) pkgconfig(Qt5Test)
 BuildRequires: python2-devel
@@ -210,6 +209,9 @@ fi
 
 
 %changelog
+* Tue Sep 06 2016 Rex Dieter <rdieter@fedoraproject.org> - 16.08.0-5
+- fix luajit-2.1 detection (#1371250)
+
 * Tue Sep 06 2016 Rex Dieter <rdieter@fedoraproject.org> - 16.08.0-4
 - python subpkgs: add Obsoletes for upgrade path
 - multilib fixes: move plugins to -libs, make plugins depend on -libs
