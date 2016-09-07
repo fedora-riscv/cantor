@@ -1,8 +1,8 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 16.08.0
-Release: 6%{?dist}
+Version: 16.08.1
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     https://quickgit.kde.org/?p=%{name}.git
@@ -211,6 +211,9 @@ fi
 
 
 %changelog
+* Wed Sep 07 2016 Rex Dieter <rdieter@fedoraproject.org> - 16.08.1-1
+- 16.08.1
+
 * Tue Sep 06 2016 Than Ngo <than@redhat.com> - 16.08.0-6
 - fix build failure with luajit 2.1
 
