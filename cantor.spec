@@ -2,7 +2,7 @@
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
 Version: 16.08.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 License: GPLv2+
 URL:     https://quickgit.kde.org/?p=%{name}.git
@@ -37,7 +37,7 @@ BuildRequires: libappstream-glib
 BuildRequires: pkgconfig(libqalculate)
 BuildRequires: pkgconfig(libR)
 BuildRequires: pkgconfig(libspectre)
-%ifarch %{arm} %{ix86} x86_64
+%ifarch %{arm} %{ix86} x86_64 aarch64
 BuildRequires: pkgconfig(luajit)
 %global has_luajit 1
 %endif
@@ -211,6 +211,9 @@ fi
 
 
 %changelog
+* Mon Sep 19 2016 Peter Robinson <pbrobinson@fedoraproject.org> 16.08.1-2
+- aarch64 now has LuaJIT
+
 * Wed Sep 07 2016 Rex Dieter <rdieter@fedoraproject.org> - 16.08.1-1
 - 16.08.1
 
