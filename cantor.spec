@@ -1,8 +1,8 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 16.08.1
-Release: 2%{?dist}
+Version: 16.08.2
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     https://quickgit.kde.org/?p=%{name}.git
@@ -211,6 +211,9 @@ fi
 
 
 %changelog
+* Thu Oct 13 2016 Rex Dieter <rdieter@fedoraproject.org> - 16.08.2-1
+- 16.08.2
+
 * Mon Sep 19 2016 Peter Robinson <pbrobinson@fedoraproject.org> 16.08.1-2
 - aarch64 now has LuaJIT
 
