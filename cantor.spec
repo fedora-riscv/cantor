@@ -2,7 +2,7 @@
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
 Version: 16.08.3
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 License: GPLv2+
 URL:     https://quickgit.kde.org/?p=%{name}.git
@@ -211,6 +211,9 @@ fi
 
 
 %changelog
+* Mon Dec 19 2016 Miro Hrončok <mhroncok@redhat.com> - 16.08.3-2
+- Rebuild for Python 3.6
+
 * Mon Dec 05 2016 Rex Dieter <rdieter@fedoraproject.org> - 16.08.3-1
 - 16.08.3
 
