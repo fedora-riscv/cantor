@@ -18,6 +18,10 @@ Source0: http://download.kde.org/%{stable}/applications/%{version}/src/%{name}-%
 ## upstreamable patches
 %if 0%{?fedora} > 25
 Patch100: cantor-16.08.0-luajit.patch
+# Handle Python 3.6 when detecting Python 3 libs
+# Applied upstream to 16.12:
+# https://cgit.kde.org/cantor.git/commit/?h=Applications/16.12&id=a7c33c9b0411eb2335645d36feb9ebdf86570c57
+Patch101: cantor-16.08.3-python3.patch
 %endif
 
 %global majmin_ver %(echo %{version} | cut -d. -f1,2)
@@ -211,7 +215,10 @@ fi
 
 
 %changelog
-* Mon Dec 19 2016 Miro Hrončok <mhroncok@redhat.com> - 16.08.3-2
+* Wed Dec 28 2016 Adam Williamson <awilliam@redhat.com>
+- Fix build with Python 3
+
+* Mon Dec 19 2016 Miro Hrončok <mhroncok@redhat.com>
 - Rebuild for Python 3.6
 
 * Mon Dec 05 2016 Rex Dieter <rdieter@fedoraproject.org> - 16.08.3-1
