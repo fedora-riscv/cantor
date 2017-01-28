@@ -2,7 +2,7 @@
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
 Version: 16.08.3
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 License: GPLv2+
 URL:     https://quickgit.kde.org/?p=%{name}.git
@@ -215,6 +215,9 @@ fi
 
 
 %changelog
+* Sat Jan 28 2017 Mukundan Ragavan <nonamedotc@gmail.com> - 16.08.3-3
+- rebuild for libqalculate.so.6
+
 * Wed Dec 28 2016 Adam Williamson <awilliam@redhat.com>
 - Fix build with Python 3
 
