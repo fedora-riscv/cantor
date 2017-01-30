@@ -233,7 +233,7 @@ fi
 %{_kf5_qtplugindir}/cantor/panels/
 %dir %{_kf5_qtplugindir}/cantor/backends/
 %{_kf5_qtplugindir}/cantor/backends/cantor_kalgebrabackend.so
-%if 0%{?has_luajit}
+%if 0%{?luajit}
 %{_kf5_qtplugindir}/cantor/backends/cantor_luabackend.so
 %endif
 %{_kf5_qtplugindir}/cantor/backends/cantor_maximabackend.so
