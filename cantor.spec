@@ -1,11 +1,25 @@
 
+# uncomment to enable bootstrap mode
+#global bootstrap 1
+
+%if !0%{?bootstrap}
+%global qalculate 1
+%if 0%{?fedora} < 26
+%global libr 1
+%endif
+%global libspectre 1
+%ifarch %{arm} %{ix86} x86_64 aarch64
+%global luajit 1
+%endif
+%endif
+
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 16.08.3
-Release: 3%{?dist}
+Version: 16.12.1
+Release: 1%{?dist}
 
 License: GPLv2+
-URL:     https://quickgit.kde.org/?p=%{name}.git
+URL:     https://edu.kde.org/cantor/
 
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
@@ -18,36 +32,49 @@ Source0: http://download.kde.org/%{stable}/applications/%{version}/src/%{name}-%
 ## upstreamable patches
 %if 0%{?fedora} > 25
 Patch100: cantor-16.08.0-luajit.patch
-# Handle Python 3.6 when detecting Python 3 libs
-# Applied upstream to 16.12:
-# https://cgit.kde.org/cantor.git/commit/?h=Applications/16.12&id=a7c33c9b0411eb2335645d36feb9ebdf86570c57
-Patch101: cantor-16.08.3-python3.patch
 %endif
 
 %global majmin_ver %(echo %{version} | cut -d. -f1,2)
 BuildRequires: analitza-devel >= %{majmin_ver}
+
 BuildRequires: desktop-file-utils
-BuildRequires: extra-cmake-modules >= 1.3
-BuildRequires: kf5-karchive-devel
-BuildRequires: kf5-kconfig-devel
-BuildRequires: kf5-kcoreaddons-devel
-BuildRequires: kf5-kdelibs4support-devel
-BuildRequires: kf5-knewstuff-devel
-BuildRequires: kf5-kparts-devel
-BuildRequires: kf5-kpty-devel
-BuildRequires: kf5-ktexteditor-devel
-BuildRequires: kf5-rpm-macros
 BuildRequires: libappstream-glib
+
+BuildRequires: extra-cmake-modules
+BuildRequires: kf5-rpm-macros
+BuildRequires: cmake(KF5Archive)
+BuildRequires: cmake(KF5Completion)
+BuildRequires: cmake(KF5Config)
+BuildRequires: cmake(KF5CoreAddons)
+BuildRequires: cmake(KF5Crash)
+BuildRequires: cmake(KF5DocTools)
+BuildRequires: cmake(KF5I18n)
+BuildRequires: cmake(KF5IconThemes)
+BuildRequires: cmake(KF5KIO)
+BuildRequires: cmake(KF5NewStuff)
+BuildRequires: cmake(KF5Parts)
+BuildRequires: cmake(KF5Pty)
+BuildRequires: cmake(KF5TextEditor)
+BuildRequires: cmake(KF5TextWidgets)
+BuildRequires: cmake(KF5XmlGui)
+
+BuildRequires: pkgconfig(Qt5PrintSupport)
+BuildRequires: pkgconfig(Qt5Svg)
+BuildRequires: pkgconfig(Qt5Widgets)
+BuildRequires: pkgconfig(Qt5Xml)
+BuildRequires: pkgconfig(Qt5XmlPatterns)
+BuildRequires: pkgconfig(Qt5Test)
+
+# optional deps/plugins
+%if 0%{?qalculate}
 BuildRequires: pkgconfig(libqalculate)
-BuildRequires: pkgconfig(libR)
-BuildRequires: pkgconfig(libspectre)
-%ifarch %{arm} %{ix86} x86_64 aarch64
-BuildRequires: pkgconfig(luajit)
-%global has_luajit 1
 %endif
-BuildRequires: pkgconfig(Qt5Widgets) pkgconfig(Qt5Svg) pkgconfig(Qt5Xml) pkgconfig(Qt5XmlPatterns) pkgconfig(Qt5Test)
-BuildRequires: python2-devel
-BuildRequires: python3-devel
+%if 0%{?libspectre}
+BuildRequires: pkgconfig(libspectre)
+%endif
+%if 0%{?luajit}
+BuildRequires: pkgconfig(luajit)
+%endif
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 
@@ -56,20 +83,20 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 
 %package -n python2-%{name}
 Summary: %{name} python2 backend
+BuildRequires: python2-devel
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 # upgrade path, when split out
 Obsoletes: cantor <  16.08.0-3
 %{?python_provide:%python_provide python2-%{name}}
-
 %description -n python2-%{name}
 %{name} python2 backend.
 
 %package -n python3-%{name}
 Summary: %{name} python3 backend
+BuildRequires: python3-devel
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Obsoletes: cantor <  16.08.0-3
 %{?python_provide:%python_provide python3-%{name}}
-
 %description -n python3-%{name}
 %{name} python3 backend.
 
@@ -82,13 +109,16 @@ Requires: %{name} = %{version}-%{release}
 %description libs
 %{summary}.
 
+%if 0%{?libr}
 %package R
 Summary: R backend for %{name}
+BuildRequires: pkgconfig(libR)
 Obsoletes: kdeedu-math-cantor-R < 4.7.0-10
 Provides:  kdeedu-math-cantor-R = %{version}-%{release}
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 %description R 
 %{summary}.
+%endif
 
 %package devel
 Summary:  Development files for %{name}
@@ -149,12 +179,14 @@ fi
 %{_kf5_datadir}/applications/org.kde.%{name}.desktop
 %{_kf5_sysconfdir}/xdg/cantor.knsrc
 %{_kf5_sysconfdir}/xdg/cantor_kalgebra.knsrc
-%if 0%{?has_luajit}
+%if 0%{?luajit}
 %{_kf5_sysconfdir}/xdg/cantor_lua.knsrc
 %endif
 %{_kf5_sysconfdir}/xdg/cantor_maxima.knsrc
 %{_kf5_sysconfdir}/xdg/cantor_octave.knsrc
+%if 0%{?qalculate}
 %{_kf5_sysconfdir}/xdg/cantor_qalculate.knsrc
+%endif
 %{_kf5_sysconfdir}/xdg/cantor_sage.knsrc
 %{_kf5_sysconfdir}/xdg/cantor_scilab.knsrc
 %dir %{_kf5_datadir}/kxmlgui5/cantor/
@@ -177,11 +209,13 @@ fi
 %{_kf5_qtplugindir}/cantor/backends/cantor_python3backend.so
 %{_kf5_datadir}/config.kcfg/python3backend.kcfg
 
+%if 0%{?libr}
 %files R
 %{_kf5_bindir}/cantor_rserver
 %{_kf5_qtplugindir}/cantor/backends/cantor_rbackend.so
 %{_kf5_datadir}/config.kcfg/rserver.kcfg
 %{_kf5_sysconfdir}/xdg/cantor_r.knsrc
+%endif
 
 %post libs -p /sbin/ldconfig
 %postun libs -p /sbin/ldconfig
@@ -205,7 +239,9 @@ fi
 %{_kf5_qtplugindir}/cantor/backends/cantor_maximabackend.so
 %{_kf5_qtplugindir}/cantor/backends/cantor_nullbackend.so
 %{_kf5_qtplugindir}/cantor/backends/cantor_octavebackend.so
+%if 0%{?qalculate}
 %{_kf5_qtplugindir}/cantor/backends/cantor_qalculatebackend.so
+%endif
 %{_kf5_qtplugindir}/cantor/backends/cantor_sagebackend.so
 %{_kf5_qtplugindir}/cantor/backends/cantor_scilabbackend.so
 
@@ -215,6 +251,9 @@ fi
 
 
 %changelog
+* Mon Jan 30 2017 Rex Dieter <rdieter@fedoraproject.org> - 16.12.1-1
+- 16.12.1, update URL, support %%bootstrap
+
 * Sat Jan 28 2017 Mukundan Ragavan <nonamedotc@gmail.com> - 16.08.3-3
 - rebuild for libqalculate.so.6
 
