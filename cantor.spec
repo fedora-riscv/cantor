@@ -15,8 +15,8 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 16.12.2
-Release: 3%{?dist}
+Version: 16.12.3
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -30,8 +30,6 @@ URL:     https://edu.kde.org/cantor/
 Source0: http://download.kde.org/%{stable}/applications/%{version}/src/%{name}-%{version}.tar.xz
 
 ## upstream fixes (lookaside cache)
-Patch1: 0001-remove-modern-C-use-to-fix-compile-with-current-KDE-.patch
-Patch2: 0002-julia-Fix-build-with-fno-operator-names.patch
 
 ## upstreamable patches
 %if 0%{?fedora} > 25
@@ -255,6 +253,9 @@ fi
 
 
 %changelog
+* Fri Mar 10 2017 Rex Dieter <rdieter@fedoraproject.org> - 16.12.3-1
+- 16.12.3
+
 * Mon Feb 20 2017 Rex Dieter <rdieter@fedoraproject.org> - 16.12.2-3
 - cantor: FTBFS in rawhide (#1423091)
 
