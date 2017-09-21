@@ -15,8 +15,8 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 16.12.3
-Release: 3%{?dist}
+Version: 17.08.1
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -32,9 +32,6 @@ Source0: http://download.kde.org/%{stable}/applications/%{version}/src/%{name}-%
 ## upstream fixes (lookaside cache)
 
 ## upstreamable patches
-%if 0%{?fedora} > 25
-Patch100: cantor-16.08.0-luajit.patch
-%endif
 
 %global majmin_ver %(echo %{version} | cut -d. -f1,2)
 BuildRequires: analitza-devel >= %{majmin_ver}
@@ -253,6 +250,9 @@ fi
 
 
 %changelog
+* Wed Sep 06 2017 Rex Dieter <rdieter@fedoraproject.org> - 17.08.1-1
+- 17.08.1
+
 * Wed Aug 02 2017 Fedora Release Engineering <releng@fedoraproject.org> - 16.12.3-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 
