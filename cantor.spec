@@ -144,6 +144,8 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
+%find_lang %{name} --all-name --with-html --with-qt
+
 # Add Comment key to .desktop file
 grep '^Comment=' %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.desktop || \
 desktop-file-install \
@@ -169,10 +171,9 @@ touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
 gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
 fi
 
-%files
+%files -f %{name}.lang
 %doc README TODO
 %license COPYING COPYING.DOC
-%{_kf5_docdir}/HTML/en/cantor/
 %{_kf5_bindir}/cantor
 %{_kf5_datadir}/appdata/org.kde.%{name}.appdata.xml
 %{_kf5_datadir}/applications/org.kde.%{name}.desktop
