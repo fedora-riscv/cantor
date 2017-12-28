@@ -15,7 +15,7 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 17.08.3
+Version: 17.12.0
 Release: 1%{?dist}
 
 License: GPLv2+
@@ -155,7 +155,7 @@ desktop-file-install \
 
 
 %check
-appstream-util validate-relax --nonet %{buildroot}%{_kf5_datadir}/appdata/org.kde.%{name}.appdata.xml ||:
+appstream-util validate-relax --nonet %{buildroot}%{_kf5_metainfodir}/org.kde.%{name}.appdata.xml ||:
 desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.desktop
 
 
@@ -175,7 +175,7 @@ fi
 %doc README TODO
 %license COPYING COPYING.DOC
 %{_kf5_bindir}/cantor
-%{_kf5_datadir}/appdata/org.kde.%{name}.appdata.xml
+%{_kf5_metainfodir}/org.kde.%{name}.appdata.xml
 %{_kf5_datadir}/applications/org.kde.%{name}.desktop
 %{_kf5_sysconfdir}/xdg/cantor.knsrc
 %{_kf5_sysconfdir}/xdg/cantor_kalgebra.knsrc
@@ -251,6 +251,9 @@ fi
 
 
 %changelog
+* Thu Dec 28 2017 Rex Dieter <rdieter@fedoraproject.org> - 17.12.0-1
+- 17.12.0
+
 * Wed Nov 08 2017 Rex Dieter <rdieter@fedoraproject.org> - 17.08.3-1
 - 17.08.3
 
