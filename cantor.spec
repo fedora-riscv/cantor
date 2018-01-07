@@ -16,7 +16,7 @@
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
 Version: 17.12.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -159,18 +159,6 @@ appstream-util validate-relax --nonet %{buildroot}%{_kf5_metainfodir}/org.kde.%{
 desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.desktop
 
 
-%post
-touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
-
-%posttrans
-gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
-
-%postun
-if [ $1 -eq 0 ] ; then
-touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
-gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
-fi
-
 %files -f %{name}.lang
 %doc README TODO
 %license COPYING COPYING.DOC
@@ -251,6 +239,9 @@ fi
 
 
 %changelog
+* Sun Jan 07 2018 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 17.12.0-2
+- Remove obsolete scriptlets
+
 * Thu Dec 28 2017 Rex Dieter <rdieter@fedoraproject.org> - 17.12.0-1
 - 17.12.0
 
