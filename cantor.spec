@@ -138,13 +138,13 @@ pushd %{_target_platform}
 %{cmake_kf5} ..
 popd
 
-make %{?_smp_mflags} -C %{_target_platform}
+%make_build -C %{_target_platform}
 
 
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
-%find_lang %{name} --all-name --with-html --with-qt
+%find_lang %{name} --all-name --with-html
 
 # Add Comment key to .desktop file
 grep '^Comment=' %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.desktop || \
@@ -162,7 +162,7 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 %files -f %{name}.lang
 %doc README TODO
 %license COPYING COPYING.DOC
-%{_kf5_bindir}/cantor
+%{_kf5_bindir}/cantor*
 %{_kf5_metainfodir}/org.kde.%{name}.appdata.xml
 %{_kf5_datadir}/applications/org.kde.%{name}.desktop
 %{_kf5_sysconfdir}/xdg/cantor.knsrc
@@ -205,8 +205,7 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 %{_kf5_sysconfdir}/xdg/cantor_r.knsrc
 %endif
 
-%post libs -p /sbin/ldconfig
-%postun libs -p /sbin/ldconfig
+%ldconfig_scriptlets libs
 
 %files libs
 %{_libdir}/libcantorlibs.so.*
@@ -241,6 +240,7 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 %changelog
 * Wed Jun 06 2018 Rex Dieter <rdieter@fedoraproject.org> - 18.04.2-1
 - 18.04.2
+- use %%make_build %%ldconfig_scriptlets
 
 * Fri May 18 2018 Mukundan Ragavan <nonamedotc@gmail.com> - 18.04.1-2
 - rebuild for libqalculate.so.17()
