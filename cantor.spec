@@ -16,7 +16,7 @@
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
 Version: 18.04.2
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -238,6 +238,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Fri Jun 22 2018 Mukundan Ragavan <nonamedotc@gmail.com> - 18.04.2-3
+- rebuild for libqalculate.so.18()
+
 * Tue Jun 19 2018 Miro Hrončok <mhroncok@redhat.com> - 18.04.2-2
 - Rebuilt for Python 3.7
 
