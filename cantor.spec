@@ -11,12 +11,13 @@
 %ifarch %{arm} %{ix86} x86_64 aarch64
 %global luajit 1
 %endif
+%global python3 1
 %endif
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
 Version: 18.04.2
-Release: 3%{?dist}
+Release: 4%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -29,7 +30,8 @@ URL:     https://edu.kde.org/cantor/
 %endif
 Source0: http://download.kde.org/%{stable}/applications/%{version}/src/%{name}-%{version}.tar.xz
 
-## upstream fixes (lookaside cache)
+## upstream fixes
+Patch1: 0001-support-python-3.7.patch
 
 ## upstreamable patches
 
@@ -74,6 +76,11 @@ BuildRequires: pkgconfig(libspectre)
 %if 0%{?luajit}
 BuildRequires: pkgconfig(luajit)
 %endif
+%if 0%{?python3}
+BuildRequires: python3-devel
+%else
+Obsoletes: cantor-python3 < %{version}-%{release}
+%endif
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 
@@ -92,7 +99,6 @@ Obsoletes: cantor <  16.08.0-3
 
 %package -n python3-%{name}
 Summary: %{name} python3 backend
-BuildRequires: python3-devel
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Obsoletes: cantor <  16.08.0-3
 %{?python_provide:%python_provide python3-%{name}}
@@ -191,11 +197,13 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 %{_kf5_qtplugindir}/cantor/backends/cantor_python2backend.so
 %{_kf5_datadir}/config.kcfg/python2backend.kcfg
 
+%if 0%{?python3}
 %files -n python3-%{name}
 %{_kf5_sysconfdir}/xdg/cantor_python3.knsrc
 %{_kf5_bindir}/cantor_python3server
 %{_kf5_qtplugindir}/cantor/backends/cantor_python3backend.so
 %{_kf5_datadir}/config.kcfg/python3backend.kcfg
+%endif
 
 %if 0%{?libr}
 %files R
@@ -238,6 +246,10 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Fri Jun 29 2018 Rex Dieter <rdieter@fedoraproject.org> - 18.04.2-4
+- fix python-3.7
+- macro'ize python3 suport (+bootstrap'able)
+
 * Fri Jun 22 2018 Mukundan Ragavan <nonamedotc@gmail.com> - 18.04.2-3
 - rebuild for libqalculate.so.18()
 
