@@ -183,6 +183,7 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 %exclude %{_kf5_datadir}/config.kcfg/python3backend.kcfg
 %{_kf5_datadir}/kxmlgui5/cantor/cantor_scripteditor.rc
 %{_kf5_datadir}/kxmlgui5/cantor/cantor_shell.rc
+%{_kf5_datadir}/kxmlgui5/cantor/cantor_*_assistant.rc
 
 %files -n python2-%{name}
 %{_kf5_sysconfdir}/xdg/cantor_python2.knsrc
