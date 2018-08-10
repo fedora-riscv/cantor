@@ -16,8 +16,8 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 18.04.2
-Release: 5%{?dist}
+Version: 18.04.3
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -31,7 +31,6 @@ URL:     https://edu.kde.org/cantor/
 Source0: http://download.kde.org/%{stable}/applications/%{version}/src/%{name}-%{version}.tar.xz
 
 ## upstream fixes
-Patch1: 0001-support-python-3.7.patch
 
 ## upstreamable patches
 
@@ -246,6 +245,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Fri Aug 10 2018 Rex Dieter <rdieter@fedoraproject.org> - 18.04.3-1
+- 18.04.3
+
 * Thu Jul 12 2018 Fedora Release Engineering <releng@fedoraproject.org> - 18.04.2-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
