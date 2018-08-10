@@ -151,13 +151,6 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 %find_lang %{name} --all-name --with-html
 
-# Add Comment key to .desktop file
-grep '^Comment=' %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.desktop || \
-desktop-file-install \
-  --dir=%{buildroot}%{_kf5_datadir}/applications \
-  --set-comment="%{summary}" \
-  %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.desktop
-
 
 %check
 appstream-util validate-relax --nonet %{buildroot}%{_kf5_metainfodir}/org.kde.%{name}.appdata.xml ||:
@@ -165,7 +158,7 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %files -f %{name}.lang
-%doc README TODO
+%doc README* TODO
 %license COPYING COPYING.DOC
 %{_kf5_bindir}/cantor*
 %{_kf5_metainfodir}/org.kde.%{name}.appdata.xml
