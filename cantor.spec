@@ -159,7 +159,7 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %files -f %{name}.lang
-%doc README* TODO
+%doc README*
 %license COPYING COPYING.DOC
 %{_kf5_bindir}/cantor*
 %{_kf5_metainfodir}/org.kde.%{name}.appdata.xml
