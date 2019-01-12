@@ -17,7 +17,7 @@
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
 Version: 18.12.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -87,16 +87,6 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 %description
 %{summary}.
 
-%package -n python2-%{name}
-Summary: %{name} python2 backend
-BuildRequires: python2-devel
-Requires: %{name}-libs%{?_isa} = %{version}-%{release}
-# upgrade path, when split out
-Obsoletes: cantor <  16.08.0-3
-%{?python_provide:%python_provide python2-%{name}}
-%description -n python2-%{name}
-%{name} python2 backend.
-
 %package -n python3-%{name}
 Summary: %{name} python3 backend
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
@@ -141,7 +131,9 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 %build
 mkdir %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kf5} ..
+# PYTHONLIBS_FOUND is used to find Python 2.7
+# PYTHONLIBS3_FOUND is used to find Python 3.x
+%{cmake_kf5} .. -DPYTHONLIBS_FOUND:BOOL=OFF
 popd
 
 %make_build -C %{_target_platform}
@@ -180,16 +172,10 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 %{_datadir}/icons/hicolor/*/*/*
 %{_kf5_datadir}/cantor/
 %{_kf5_datadir}/config.kcfg/*.kcfg
-%exclude %{_kf5_datadir}/config.kcfg/python2backend.kcfg
 %exclude %{_kf5_datadir}/config.kcfg/python3backend.kcfg
 %{_kf5_datadir}/kxmlgui5/cantor/cantor_scripteditor.rc
 %{_kf5_datadir}/kxmlgui5/cantor/cantor_shell.rc
 %{_kf5_datadir}/kxmlgui5/cantor/cantor_*assistant.rc
-
-%files -n python2-%{name}
-%{_kf5_sysconfdir}/xdg/cantor_python2.knsrc
-%{_kf5_qtplugindir}/cantor/backends/cantor_python2backend.so
-%{_kf5_datadir}/config.kcfg/python2backend.kcfg
 
 %if 0%{?python3}
 %files -n python3-%{name}
@@ -240,6 +226,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Sat Jan 12 2019 Miro Hrončok <mhroncok@redhat.com> - 18.12.1-2
+- Remove python2 (#1659935) (#1342488)
+
 * Tue Jan 08 2019 Rex Dieter <rdieter@fedoraproject.org> - 18.12.1-1
 - 18.12.1
 
