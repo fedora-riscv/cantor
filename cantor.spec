@@ -17,7 +17,7 @@
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
 Version: 18.12.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -226,6 +226,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Mon Jan 21 2019 Mukundan Ragavan <nonamedotc@gmail.com> - 18.12.1-3
+- rebuild for libqlaculate.so.20
+
 * Sat Jan 12 2019 Miro Hrončok <mhroncok@redhat.com> - 18.12.1-2
 - Remove python2 (#1659935) (#1342488)
 
