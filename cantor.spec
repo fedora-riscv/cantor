@@ -223,6 +223,7 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 %files devel
 %{_includedir}/cantor/
 %{_libdir}/libcantorlibs.so
+%{_libdir}/cmake/Cantor/
 
 
 %changelog
