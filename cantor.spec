@@ -16,7 +16,7 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 19.04.1
+Version: 19.04.2
 Release: 1%{?dist}
 
 License: GPLv2+
@@ -227,6 +227,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Tue Jun 04 2019 Rex Dieter <rdieter@fedoraproject.org> - 19.04.2-1
+- 19.04.2
+
 * Fri May 10 2019 Rex Dieter <rdieter@fedoraproject.org> - 19.04.1-1
 - 19.04.1
 
