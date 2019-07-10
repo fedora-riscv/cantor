@@ -17,7 +17,7 @@
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
 Version: 19.04.2
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -33,6 +33,7 @@ Source0: http://download.kde.org/%{stable}/applications/%{version}/src/%{name}-%
 ## upstream fixes
 
 ## upstreamable patches
+Patch100: cantor-python38.patch
 
 %global majmin_ver %(echo %{version} | cut -d. -f1,2)
 BuildRequires: analitza-devel >= %{majmin_ver}
@@ -133,7 +134,8 @@ mkdir %{_target_platform}
 pushd %{_target_platform}
 # PYTHONLIBS_FOUND is used to find Python 2.7
 # PYTHONLIBS3_FOUND is used to find Python 3.x
-%{cmake_kf5} .. -DPYTHONLIBS_FOUND:BOOL=OFF
+%{cmake_kf5} .. \
+  -DPYTHONLIBS_FOUND:BOOL=OFF
 popd
 
 %make_build -C %{_target_platform}
@@ -227,6 +229,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Wed Jul 10 2019 Rex Dieter <rdieter@fedoraproject.org> - 19.04.2-2
+- add python-3.8 support (#1705420)
+
 * Tue Jun 04 2019 Rex Dieter <rdieter@fedoraproject.org> - 19.04.2-1
 - 19.04.2
 
