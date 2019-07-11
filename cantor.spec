@@ -16,8 +16,8 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 19.04.2
-Release: 2%{?dist}
+Version: 19.04.3
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -229,6 +229,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Thu Jul 11 2019 Rex Dieter <rdieter@fedoraproject.org> - 19.04.3-1
+- 19.04.3
+
 * Wed Jul 10 2019 Rex Dieter <rdieter@fedoraproject.org> - 19.04.2-2
 - add python-3.8 support (#1705420)
 
