@@ -16,8 +16,8 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 19.04.3
-Release: 3%{?dist}
+Version: 19.08.0
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -33,7 +33,6 @@ Source0: http://download.kde.org/%{stable}/applications/%{version}/src/%{name}-%
 ## upstream fixes
 
 ## upstreamable patches
-Patch100: cantor-python38.patch
 
 %global majmin_ver %(echo %{version} | cut -d. -f1,2)
 BuildRequires: analitza-devel >= %{majmin_ver}
@@ -229,6 +228,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Tue Aug 20 2019 Rex Dieter <rdieter@fedoraproject.org> - 19.08.0-1
+- 19.08.0
+
 * Mon Aug 19 2019 Miro Hrončok <mhroncok@redhat.com> - 19.04.3-3
 - Rebuilt for Python 3.8
 
