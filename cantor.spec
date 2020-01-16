@@ -16,8 +16,8 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 19.08.3
-Release: 3%{?dist}
+Version: 19.12.1
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -229,6 +229,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Thu Jan 16 2020 Rex Dieter <rdieter@fedoraproject.org> - 19.12.1-1
+- 19.12.1
+
 * Thu Jan 16 2020 Rex Dieter <rdieter@fedoraproject.org> - 19.08.3-3
 - cantor fails to build with Python 3.9: Could NOT find PythonLibs3 (#1791770)
 
