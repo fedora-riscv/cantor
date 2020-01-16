@@ -17,7 +17,7 @@
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
 Version: 19.08.3
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -33,6 +33,7 @@ Source0: http://download.kde.org/%{stable}/applications/%{version}/src/%{name}-%
 ## upstream fixes
 
 ## upstreamable patches
+Patch100: cantor-19.08.3-py39.patch
 
 %global majmin_ver %(echo %{version} | cut -d. -f1,2)
 BuildRequires: analitza-devel >= %{majmin_ver}
@@ -228,6 +229,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Thu Jan 16 2020 Rex Dieter <rdieter@fedoraproject.org> - 19.08.3-3
+- cantor fails to build with Python 3.9: Could NOT find PythonLibs3 (#1791770)
+
 * Fri Nov 29 2019 Mukundan Ragavan <nonamedotc@gmail.com> - 19.08.3-2
 - rebuild for libqalculate
 
