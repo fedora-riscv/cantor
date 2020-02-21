@@ -17,7 +17,7 @@
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
 Version: 19.12.2
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -66,6 +66,7 @@ BuildRequires: pkgconfig(Qt5Widgets)
 BuildRequires: pkgconfig(Qt5Xml)
 BuildRequires: pkgconfig(Qt5XmlPatterns)
 BuildRequires: pkgconfig(Qt5Test)
+BuildRequires: poppler-qt5-devel
 
 # optional deps/plugins
 %if 0%{?qalculate}
@@ -214,7 +215,6 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 %{_kf5_qtplugindir}/cantor/backends/cantor_luabackend.so
 %endif
 %{_kf5_qtplugindir}/cantor/backends/cantor_maximabackend.so
-%{_kf5_qtplugindir}/cantor/backends/cantor_nullbackend.so
 %{_kf5_qtplugindir}/cantor/backends/cantor_octavebackend.so
 %if 0%{?qalculate}
 %{_kf5_qtplugindir}/cantor/backends/cantor_qalculatebackend.so
@@ -229,6 +229,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Fri Feb 21 2020 Than Ngo <than@redhat.com> - 19.12.2-2
+- Fixed bz#1799106, FTBFS
+
 * Tue Feb 04 2020 Rex Dieter <rdieter@fedoraproject.org> - 19.12.2-1
 - 19.12.2
 
