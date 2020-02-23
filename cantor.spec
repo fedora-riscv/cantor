@@ -14,10 +14,14 @@
 %global python3 1
 %endif
 
+# track libcantor soname, rebuild dependencies for changes, includes:
+# LabPlot
+%global soname 24
+
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
 Version: 19.12.2
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -199,7 +203,8 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 %ldconfig_scriptlets libs
 
 %files libs
-%{_libdir}/libcantorlibs.so.*
+%{_libdir}/libcantorlibs.so.%{soname}*
+%{_libdir}/libcantorlibs.so.%{version}
 %{_libdir}/libcantor_config.so
 %{_kf5_qtplugindir}/libcantorpart.so
 %{_kf5_datadir}/kxmlgui5/cantor/cantor_part.rc
@@ -229,6 +234,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Sun Feb 23 2020 Rex Dieter <rdieter@fedoraproject.org> - 19.12.2-3
+- track library soname
+
 * Fri Feb 21 2020 Than Ngo <than@redhat.com> - 19.12.2-2
 - Fixed bz#1799106, FTBFS
 
