@@ -20,8 +20,8 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 19.12.2
-Release: 3%{?dist}
+Version: 19.12.3
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -234,6 +234,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Fri Mar 06 2020 Rex Dieter <rdieter@fedoraproject.org> - 19.12.3-1
+- 19.12.3
+
 * Sun Feb 23 2020 Rex Dieter <rdieter@fedoraproject.org> - 19.12.2-3
 - track library soname
 
