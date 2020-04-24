@@ -20,8 +20,8 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 19.12.3
-Release: 2%{?dist}
+Version: 20.04.0
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -32,7 +32,7 @@ URL:     https://edu.kde.org/cantor/
 %else
 %global stable stable
 %endif
-Source0: http://download.kde.org/%{stable}/applications/%{version}/src/%{name}-%{version}.tar.xz
+Source0: http://download.kde.org/%{stable}/release-service/%{version}/src/%{name}-%{version}.tar.xz
 
 ## upstream fixes
 
@@ -234,6 +234,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Fri Apr 24 2020 Rex Dieter <rdieter@fedoraproject.org> - 20.04.0-1
+- 20.04.0
+
 * Sun Mar 08 2020 Mukundan Ragavan <nonamedotc@gmail.com> - 19.12.3-2
 - rebuild for libqalculate
 
