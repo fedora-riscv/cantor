@@ -1,4 +1,5 @@
 
+
 # uncomment to enable bootstrap mode
 #global bootstrap 1
 
@@ -84,22 +85,14 @@ BuildRequires: pkgconfig(luajit)
 %endif
 %if 0%{?python3}
 BuildRequires: python3-devel
-%else
-Obsoletes: cantor-python3 < %{version}-%{release}
 %endif
+# no python3 subpkg anymore
+Obsoletes: cantor-python3 < 20.04.1
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 
 %description
 %{summary}.
-
-%package -n python3-%{name}
-Summary: %{name} python3 backend
-Requires: %{name}-libs%{?_isa} = %{version}-%{release}
-Obsoletes: cantor <  16.08.0-3
-%{?python_provide:%python_provide python3-%{name}}
-%description -n python3-%{name}
-%{name} python3 backend.
 
 %package  libs
 Summary:  Runtime files for %{name}
@@ -170,6 +163,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 %endif
 %{_kf5_sysconfdir}/xdg/cantor_maxima.knsrc
 %{_kf5_sysconfdir}/xdg/cantor_octave.knsrc
+%if 0%{?python3}
+%{_kf5_sysconfdir}/xdg/cantor_python.knsrc
+%endif
 %if 0%{?qalculate}
 %{_kf5_sysconfdir}/xdg/cantor_qalculate.knsrc
 %endif
@@ -179,18 +175,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 %{_datadir}/icons/hicolor/*/*/*
 %{_kf5_datadir}/cantor/
 %{_kf5_datadir}/config.kcfg/*.kcfg
-%exclude %{_kf5_datadir}/config.kcfg/python3backend.kcfg
 %{_kf5_datadir}/kxmlgui5/cantor/cantor_scripteditor.rc
 %{_kf5_datadir}/kxmlgui5/cantor/cantor_shell.rc
 %{_kf5_datadir}/kxmlgui5/cantor/cantor_*assistant.rc
-
-%if 0%{?python3}
-%files -n python3-%{name}
-%{_kf5_sysconfdir}/xdg/cantor_python3.knsrc
-%{_kf5_bindir}/cantor_python3server
-%{_kf5_qtplugindir}/cantor/backends/cantor_python3backend.so
-%{_kf5_datadir}/config.kcfg/python3backend.kcfg
-%endif
 
 %if 0%{?libr}
 %files R
@@ -208,9 +195,11 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 %{_libdir}/libcantor_config.so
 %{_kf5_qtplugindir}/libcantorpart.so
 %{_kf5_datadir}/kxmlgui5/cantor/cantor_part.rc
-## plugins
-# here ok or in python subpkgs ?  --rex
-%{_kf5_libdir}/libcantor_pythonbackend.so
+## backend/plugins
+%if 0%{?python3}
+%{_kf5_libdir}/cantor_pythonbackend.so
+%{_kf5_qtplugindir}/cantor/backends/cantor_pythonbackend.so
+%endif
 %dir %{_kf5_qtplugindir}/cantor/
 %{_kf5_qtplugindir}/cantor/assistants/
 %{_kf5_qtplugindir}/cantor/panels/
@@ -236,6 +225,7 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 %changelog
 * Tue May 26 2020 Rex Dieter <rdieter@fedoraproject.org> - 20.04.1-1
 - 20.04.1
+- drop -python3 subpkg (included in main pkg now)
 
 * Tue May 26 2020 Miro Hrončok <mhroncok@redhat.com> - 20.04.0-2
 - Rebuilt for Python 3.9
