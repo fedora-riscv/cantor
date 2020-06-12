@@ -21,8 +21,8 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 20.04.1
-Release: 2%{?dist}
+Version: 20.04.2
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -223,6 +223,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Fri Jun 12 2020 Rex Dieter <rdieter@fedoraproject.org> - 20.04.2-1
+- 20.04.2
+
 * Wed May 27 2020 Miro Hrončok <mhroncok@redhat.com> - 20.04.1-2
 - Rebuilt for Python 3.9
 
