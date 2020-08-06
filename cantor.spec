@@ -128,19 +128,14 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 
 
 %build
-mkdir %{_target_platform}
-pushd %{_target_platform}
 # PYTHONLIBS_FOUND is used to find Python 2.7
 # PYTHONLIBS3_FOUND is used to find Python 3.x
-%{cmake_kf5} .. \
-  -DPYTHONLIBS_FOUND:BOOL=OFF
-popd
-
-%make_build -C %{_target_platform}
+%cmake_kf5 -DPYTHONLIBS_FOUND:BOOL=OFF
+%cmake_build
 
 
 %install
-make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
+%cmake_install
 
 %find_lang %{name} --all-name --with-html
 
