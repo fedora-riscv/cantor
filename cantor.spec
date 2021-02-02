@@ -1,5 +1,4 @@
 
-
 # uncomment to enable bootstrap mode
 #global bootstrap 1
 
@@ -21,8 +20,8 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 20.08.3
-Release: 2%{?dist}
+Version: 20.12.2
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -38,7 +37,6 @@ Source0: http://download.kde.org/%{stable}/release-service/%{version}/src/%{name
 ## upstream fixes
 
 ## upstreamable patches
-Patch100: cantor-19.08.3-py39.patch
 
 %global majmin_ver %(echo %{version} | cut -d. -f1,2)
 BuildRequires: analitza-devel >= %{majmin_ver}
@@ -131,6 +129,7 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 # PYTHONLIBS_FOUND is used to find Python 2.7
 # PYTHONLIBS3_FOUND is used to find Python 3.x
 %cmake_kf5 -DPYTHONLIBS_FOUND:BOOL=OFF
+
 %cmake_build
 
 
@@ -151,21 +150,21 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 %{_kf5_bindir}/cantor*
 %{_kf5_metainfodir}/org.kde.%{name}.appdata.xml
 %{_kf5_datadir}/applications/org.kde.%{name}.desktop
-%{_kf5_sysconfdir}/xdg/cantor.knsrc
-%{_kf5_sysconfdir}/xdg/cantor_kalgebra.knsrc
+%{_kf5_datadir}/knsrcfiles//cantor.knsrc
+%{_kf5_datadir}/knsrcfiles//cantor_kalgebra.knsrc
 %if 0%{?luajit}
-%{_kf5_sysconfdir}/xdg/cantor_lua.knsrc
+%{_kf5_datadir}/knsrcfiles//cantor_lua.knsrc
 %endif
-%{_kf5_sysconfdir}/xdg/cantor_maxima.knsrc
-%{_kf5_sysconfdir}/xdg/cantor_octave.knsrc
+%{_kf5_datadir}/knsrcfiles//cantor_maxima.knsrc
+%{_kf5_datadir}/knsrcfiles//cantor_octave.knsrc
 %if 0%{?python3}
-%{_kf5_sysconfdir}/xdg/cantor_python.knsrc
+%{_kf5_datadir}/knsrcfiles//cantor_python.knsrc
 %endif
 %if 0%{?qalculate}
-%{_kf5_sysconfdir}/xdg/cantor_qalculate.knsrc
+%{_kf5_datadir}/knsrcfiles//cantor_qalculate.knsrc
 %endif
-%{_kf5_sysconfdir}/xdg/cantor_sage.knsrc
-%{_kf5_sysconfdir}/xdg/cantor_scilab.knsrc
+%{_kf5_datadir}/knsrcfiles//cantor_sage.knsrc
+%{_kf5_datadir}/knsrcfiles//cantor_scilab.knsrc
 %dir %{_kf5_datadir}/kxmlgui5/cantor/
 %{_datadir}/icons/hicolor/*/*/*
 %{_kf5_datadir}/cantor/
@@ -179,7 +178,7 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 %{_kf5_bindir}/cantor_rserver
 %{_kf5_qtplugindir}/cantor/backends/cantor_rbackend.so
 %{_kf5_datadir}/config.kcfg/rserver.kcfg
-%{_kf5_sysconfdir}/xdg/cantor_r.knsrc
+%{_kf5_datadir}/knsrcfiles//cantor_r.knsrc
 %endif
 
 %ldconfig_scriptlets libs
@@ -218,6 +217,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Tue Feb 02 2021 Rex Dieter <rdieter@fedoraproject.org> - 20.12.2-1
+- 20.12.2
+
 * Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 20.08.3-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
