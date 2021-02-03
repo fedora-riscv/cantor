@@ -16,7 +16,7 @@
 
 # track libcantor soname, rebuild dependencies for changes, includes:
 # LabPlot
-%global soname 27
+%global soname 28
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
