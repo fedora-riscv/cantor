@@ -25,7 +25,7 @@
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
 Version: 20.12.2
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -110,6 +110,7 @@ Requires: %{name} = %{version}-%{release}
 Summary: julia backend for %{name}
 BuildRequires: julia-devel
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
+Supplements: (%{name} and julia)
 %description julia
 %{summary}.
 %endif
@@ -121,6 +122,7 @@ BuildRequires: pkgconfig(libR)
 Obsoletes: kdeedu-math-cantor-R < 4.7.0-10
 Provides:  kdeedu-math-cantor-R = %{version}-%{release}
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
+Supplements: (%{name} and R-core)
 %description R 
 %{summary}.
 %endif
@@ -244,6 +246,10 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Thu Feb 11 2021 Rex Dieter <rdieter@fedoraproject.org> - 20.12.2-3
+- -R: Supplements: cantor and R-core
+- -julia: Supplements: cantor and julia
+
 * Thu Feb 11 2021 Rex Dieter <rdieter@fedoraproject.org> - 20.12.2-2
 - (re)enable R backend
 - enable julia backend (#1927795)
