@@ -4,7 +4,8 @@
 
 %if !0%{?bootstrap}
 %global qalculate 1
-%if 0%{?fedora} < 26
+%if 0%{?fedora}
+%global julia 1
 %global libr 1
 %endif
 %global libspectre 1
@@ -21,7 +22,7 @@
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
 Version: 20.12.2
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -101,6 +102,15 @@ Requires: %{name} = %{version}-%{release}
 %description libs
 %{summary}.
 
+%if 0%{?julia}
+%package julia
+Summary: julia backend for %{name}
+BuildRequires: julia-devel
+Requires: %{name}-libs%{?_isa} = %{version}-%{release}
+%description julia
+%{summary}.
+%endif
+
 %if 0%{?libr}
 %package R
 Summary: R backend for %{name}
@@ -128,7 +138,7 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 %build
 # PYTHONLIBS_FOUND is used to find Python 2.7
 # PYTHONLIBS3_FOUND is used to find Python 3.x
-%cmake_kf5 -DPYTHONLIBS_FOUND:BOOL=OFF
+%cmake_kf5
 
 %cmake_build
 
@@ -150,28 +160,41 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 %{_kf5_bindir}/cantor*
 %{_kf5_metainfodir}/org.kde.%{name}.appdata.xml
 %{_kf5_datadir}/applications/org.kde.%{name}.desktop
-%{_kf5_datadir}/knsrcfiles//cantor.knsrc
-%{_kf5_datadir}/knsrcfiles//cantor_kalgebra.knsrc
+%{_kf5_datadir}/knsrcfiles/cantor.knsrc
+%{_kf5_datadir}/knsrcfiles/cantor_kalgebra.knsrc
 %if 0%{?luajit}
-%{_kf5_datadir}/knsrcfiles//cantor_lua.knsrc
+%{_kf5_datadir}/knsrcfiles/cantor_lua.knsrc
 %endif
-%{_kf5_datadir}/knsrcfiles//cantor_maxima.knsrc
-%{_kf5_datadir}/knsrcfiles//cantor_octave.knsrc
+%{_kf5_datadir}/knsrcfiles/cantor_maxima.knsrc
+%{_kf5_datadir}/knsrcfiles/cantor_octave.knsrc
 %if 0%{?python3}
-%{_kf5_datadir}/knsrcfiles//cantor_python.knsrc
+%{_kf5_datadir}/knsrcfiles/cantor_python.knsrc
 %endif
 %if 0%{?qalculate}
-%{_kf5_datadir}/knsrcfiles//cantor_qalculate.knsrc
+%{_kf5_datadir}/knsrcfiles/cantor_qalculate.knsrc
 %endif
-%{_kf5_datadir}/knsrcfiles//cantor_sage.knsrc
-%{_kf5_datadir}/knsrcfiles//cantor_scilab.knsrc
+%{_kf5_datadir}/knsrcfiles/cantor_sage.knsrc
+%{_kf5_datadir}/knsrcfiles/cantor_scilab.knsrc
 %dir %{_kf5_datadir}/kxmlgui5/cantor/
 %{_datadir}/icons/hicolor/*/*/*
-%{_kf5_datadir}/cantor/
+%dir %{_kf5_datadir}/cantor/
+%{_kf5_datadir}/cantor/latex/
+%{_kf5_datadir}/cantor/maximabackend/
+%{_kf5_datadir}/cantor/octave/
+%{_kf5_datadir}/cantor/octavebackend/
+%{_kf5_datadir}/cantor/sagebackend/
+%{_kf5_datadir}/cantor/xslt/
 %{_kf5_datadir}/config.kcfg/*.kcfg
 %{_kf5_datadir}/kxmlgui5/cantor/cantor_scripteditor.rc
 %{_kf5_datadir}/kxmlgui5/cantor/cantor_shell.rc
 %{_kf5_datadir}/kxmlgui5/cantor/cantor_*assistant.rc
+
+%if 0%{?julia}
+%files julia
+%{_kf5_datadir}/cantor/julia/
+%{_kf5_datadir}/cantor/juliabackend/
+%{_kf5_qtplugindir}/cantor/backends/cantor_juliabackend.so
+%endif
 
 %if 0%{?libr}
 %files R
@@ -191,6 +214,7 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 %{_kf5_datadir}/kxmlgui5/cantor/cantor_part.rc
 ## backend/plugins
 %if 0%{?python3}
+%{_kf5_datadir}/cantor/python/
 %{_kf5_libdir}/cantor_pythonbackend.so
 %{_kf5_qtplugindir}/cantor/backends/cantor_pythonbackend.so
 %endif
@@ -217,6 +241,10 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Thu Feb 11 2021 Rex Dieter <rdieter@fedoraproject.org> - 20.12.2-2
+- (re)enable R backend
+- enable julia backend (#1927795)
+
 * Tue Feb 02 2021 Rex Dieter <rdieter@fedoraproject.org> - 20.12.2-1
 - 20.12.2
 
