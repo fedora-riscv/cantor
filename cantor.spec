@@ -5,7 +5,10 @@
 %if !0%{?bootstrap}
 %global qalculate 1
 %if 0%{?fedora}
+# match julia.spec: ExcludeArch:  s390x ppc64le %{arm} aarch64
+%ifnarch s390x ppc64le %{arm} aarch64
 %global julia 1
+%endif
 %global libr 1
 %endif
 %global libspectre 1
