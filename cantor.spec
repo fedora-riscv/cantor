@@ -24,8 +24,8 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 20.12.2
-Release: 3%{?dist}
+Version: 20.12.3
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -246,6 +246,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Wed Mar 03 2021 Rex Dieter <rdieter@fedoraproject.org> - 20.12.3-1
+- 20.12.3
+
 * Thu Feb 11 2021 Rex Dieter <rdieter@fedoraproject.org> - 20.12.2-3
 - -R: Supplements: cantor and R-core
 - -julia: Supplements: cantor and julia
