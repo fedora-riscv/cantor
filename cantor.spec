@@ -25,7 +25,7 @@
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
 Version: 21.04.2
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -247,6 +247,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Wed Jul 21 2021 Fedora Release Engineering <releng@fedoraproject.org> - 21.04.2-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
+
 * Thu Jun 10 2021 Rex Dieter <rdieter@fedoraproject.org> - 21.04.2-1
 - 21.04.2
 
