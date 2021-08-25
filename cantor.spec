@@ -25,7 +25,7 @@
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
 Version: 21.04.3
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -41,6 +41,10 @@ Source0: http://download.kde.org/%{stable}/release-service/%{version}/src/%{name
 ## upstream fixes
 
 ## upstreamable patches
+# julia 1.7.0 api change
+# https://github.com/JuliaLang/julia/pull/40715
+# https://github.com/JuliaLang/julia/commit/b46df09eb651eba97776fe73e8044e0456e81320
+Patch1:  cantor-21.04.3-julia-170-api.patch
 
 %global majmin_ver %(echo %{version} | cut -d. -f1,2)
 BuildRequires: analitza-devel >= %{majmin_ver}
@@ -247,6 +251,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Wed Aug 25 2021 Mamoru TASAKA <mtasaka@fedoraproject.org> - 21.04.3-3
+- Tentative patch for julia 1.7.0 api change
+
 * Sun Aug 08 2021 Mukundan Ragavan <nonamedotc@gmail.com> - 21.04.3-2
 - rebuild for libqalculate
 
