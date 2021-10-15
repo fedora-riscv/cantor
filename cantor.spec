@@ -24,8 +24,8 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 21.04.3
-Release: 4%{?dist}
+Version: 21.08.2
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -253,6 +253,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Fri Oct 15 2021 Rex Dieter <rdieter@fedoraproject.org> - 21.08.2-1
+- 21.08.2
+
 * Sun Aug 29 2021 Mamoru TASAKA <mtasaka@fedoraproject.org> - 21.04.3-4
 - Kill using julia internal API
 
