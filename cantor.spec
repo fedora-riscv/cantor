@@ -74,6 +74,7 @@ BuildRequires: cmake(KF5TextWidgets)
 BuildRequires: cmake(KF5XmlGui)
 
 BuildRequires: cmake(Qt5Help)
+BuildRequires: cmake(Qt5WebEngine)
 BuildRequires: pkgconfig(Qt5PrintSupport)
 BuildRequires: pkgconfig(Qt5Svg)
 BuildRequires: pkgconfig(Qt5Widgets)
