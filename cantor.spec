@@ -224,7 +224,7 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 %{_libdir}/libcantorlibs.so.%{soname}*
 %{_libdir}/libcantorlibs.so.%{version}
 %{_libdir}/libcantor_config.so
-%{_kf5_qtplugindir}/libcantorpart.so
+%{_kf5_plugindir}/parts/libcantorpart.so
 %{_kf5_datadir}/kxmlgui5/cantor/cantor_part.rc
 ## backend/plugins
 %if 0%{?python3}
