@@ -1,4 +1,3 @@
-
 # uncomment to enable bootstrap mode
 #global bootstrap 1
 
@@ -188,6 +187,7 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 %endif
 %{_kf5_datadir}/knsrcfiles/cantor_sage.knsrc
 %{_kf5_datadir}/knsrcfiles/cantor_scilab.knsrc
+%{_kf5_datadir}/knsrcfiles/cantor-documentation.knsrc
 %dir %{_kf5_datadir}/kxmlgui5/cantor/
 %{_datadir}/icons/hicolor/*/*/*
 %dir %{_kf5_datadir}/cantor/
@@ -197,7 +197,7 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 %{_kf5_datadir}/cantor/octavebackend/
 %{_kf5_datadir}/cantor/sagebackend/
 %{_kf5_datadir}/cantor/xslt/
-%{_kf5_datadir}/config.kcfg/*.kcfg
+%{_kf5_datadir}/config.kcfg/*
 %{_kf5_datadir}/kxmlgui5/cantor/cantor_scripteditor.rc
 %{_kf5_datadir}/kxmlgui5/cantor/cantor_shell.rc
 %{_kf5_datadir}/kxmlgui5/cantor/cantor_*assistant.rc
@@ -215,7 +215,7 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 %{_kf5_bindir}/cantor_rserver
 %{_kf5_qtplugindir}/cantor/backends/cantor_rbackend.so
 %{_kf5_datadir}/config.kcfg/rserver.kcfg
-%{_kf5_datadir}/knsrcfiles//cantor_r.knsrc
+%{_kf5_datadir}/knsrcfiles/cantor_r.knsrc
 %endif
 
 %ldconfig_scriptlets libs
@@ -224,7 +224,7 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 %{_libdir}/libcantorlibs.so.%{soname}*
 %{_libdir}/libcantorlibs.so.%{version}
 %{_libdir}/libcantor_config.so
-%{_kf5_plugindir}/parts/libcantorpart.so
+%{_kf5_plugindir}/parts/cantorpart.so
 %{_kf5_datadir}/kxmlgui5/cantor/cantor_part.rc
 ## backend/plugins
 %if 0%{?python3}
