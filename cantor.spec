@@ -37,6 +37,9 @@ URL:     https://edu.kde.org/cantor/
 %endif
 Source0: http://download.kde.org/%{stable}/release-service/%{version}/src/%{name}-%{version}.tar.xz
 
+# handled by qt5-srpm-macros, which defines %%qt5_qtwebengine_arches
+%{?qt5_qtwebengine_arches:ExclusiveArch: %{qt5_qtwebengine_arches}}
+
 ## upstream fixes
 
 ## upstreamable patches
@@ -257,6 +260,7 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 %changelog
 * Fri Oct 15 2021 Rex Dieter <rdieter@fedoraproject.org> - 21.08.2-1
 - 21.08.2
+- new QtWebEngine dep restricts arch's
 
 * Sun Aug 29 2021 Mamoru TASAKA <mtasaka@fedoraproject.org> - 21.04.3-4
 - Kill using julia internal API
