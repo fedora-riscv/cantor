@@ -23,7 +23,7 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 21.08.2
+Version: 21.08.3
 Release: 1%{?dist}
 
 License: GPLv2+
@@ -258,6 +258,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Tue Nov 02 2021 Rex Dieter <rdieter@fedoraproject.org> - 21.08.3-1
+- 21.08.3
+
 * Fri Oct 15 2021 Rex Dieter <rdieter@fedoraproject.org> - 21.08.2-1
 - 21.08.2
 - new QtWebEngine dep restricts arch's
