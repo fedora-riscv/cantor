@@ -23,7 +23,7 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 21.08.3
+Version: 21.12.1
 Release: 1%{?dist}
 
 License: GPLv2+
@@ -43,10 +43,6 @@ Source0: http://download.kde.org/%{stable}/release-service/%{version}/src/%{name
 ## upstream fixes
 
 ## upstreamable patches
-# julia 1.7.0 api change
-# https://github.com/JuliaLang/julia/pull/40715
-# https://github.com/JuliaLang/julia/commit/b46df09eb651eba97776fe73e8044e0456e81320
-Patch1:  cantor-21.04.3-julia-170-api.patch
 # Kill using cantor internal API
 Patch2:  cantor-21.04.3-no-julia-internal.patch
 
@@ -258,6 +254,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Thu Jan 06 2022 Rex Dieter <rdieter@fedoraproject.org> - 21.12.1-1
+- 21.12.1
+
 * Tue Nov 02 2021 Rex Dieter <rdieter@fedoraproject.org> - 21.08.3-1
 - 21.08.3
 
