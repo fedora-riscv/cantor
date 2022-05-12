@@ -23,7 +23,7 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 22.04.0
+Version: 22.04.1
 Release: 1%{?dist}
 
 License: GPLv2+
@@ -254,6 +254,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Thu May 12 2022 Justin Zobel <justin@1707.io> - 22.04.1-1
+- Update to 22.04.1
+
 * Mon May 09 2022 Justin Zobel <justin@1707.io> - 22.04.0-1
 - Update to 22.04.0
 
