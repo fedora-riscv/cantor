@@ -23,8 +23,8 @@
 
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
-Version: 22.04.3
-Release: 2%{?dist}
+Version: 22.08.0
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -254,6 +254,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Fri Aug 19 2022 Marc Deop <marcdeop@fedoraproject.org> - 22.08.0-1
+- 22.08.0
+
 * Wed Jul 20 2022 Fedora Release Engineering <releng@fedoraproject.org> - 22.04.3-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild
 
