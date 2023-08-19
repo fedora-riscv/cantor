@@ -5,7 +5,7 @@
 %global qalculate 1
 %if 0%{?fedora}
 # match julia.spec: ExcludeArch:  s390x ppc64le %{arm} aarch64
-%ifnarch s390x ppc64le %{arm} aarch64
+%ifnarch s390x ppc64le %{arm} aarch64 riscv64
 %global julia 1
 %endif
 %global libr 1
@@ -24,7 +24,7 @@
 Name:    cantor
 Summary: KDE Frontend to Mathematical Software
 Version: 22.12.3
-Release: 1%{?dist}
+Release: 1.rv64%{?dist}
 
 License: GPLv2+
 URL:     https://edu.kde.org/cantor/
@@ -254,6 +254,9 @@ desktop-file-validate %{buildroot}%{_kf5_datadir}/applications/org.kde.%{name}.d
 
 
 %changelog
+* Sat Aug 19 2023 Liu Yang <Yang.Liu.sn@gmail.com> - 22.12.3-1.rv64
+- Fix build on riscv64.
+
 * Thu Mar 02 2023 Marc Deop i Argemí <marcdeop@fedoraproject.org> - 22.12.3-1
 - 22.12.3
 
